@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "launch program that reads a file from stdin",
+      "type": "node",
+      "request": "launch",
+      "program": "server.js",
+      "console": "integratedTerminal",
+      "args": ["<", "in.txt"]
+    }
+  ]
+}
