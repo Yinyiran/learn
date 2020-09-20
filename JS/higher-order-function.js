@@ -170,6 +170,71 @@ const throttle = function (fn, interval) {
   }
 }
 
-window.onresize = throttle(function () {
-  console.log(1)
-}, 400)
+// window.onresize = throttle(function () {
+//   console.log(1)
+// }, 400)
+
+
+let timeChunk = function (ary, fn, count) {
+  let timer;
+  let start = function () {
+    for (let i = 0; i < Math.min(count || 1, ary.length); i++) {
+      let obj = ary.shift();
+      fn(obj);
+    }
+  }
+  return function () {
+    timer = setInterval(function () {
+      if (ary.length === 0) {
+        return clearInterval(t)
+      }
+      start();
+    }, 200)
+  }
+}
+
+let arry = []
+for (let i = 0; i < 1000; i++) {
+  arry.push(i)
+}
+let renderFiendList = timeChunk(arry, function (n) {
+  console.log(n)
+  // let div = document.createElement('div')
+  // div.innerHTML = n;
+  // document.body.appendChild(div)
+}, 8)
+// renderFiendList();
+
+let timeChunk1 = function (arry, count, fn) {
+  let timer;
+  return function () {
+    timer = setInterval(() => {
+      if (arry.length === 0) {
+        return clearInterval(timer)
+      } else {
+        for (let i = 0; i < Math.min(count || 1, arry.length); i++) {
+          fn(arry.shift())
+        }
+      }
+    }, 200);
+  }
+}
+let timchu = timeChunk1([1, 3, 4, 5, 56, 6, 7, 7], 2, item => {
+  console.log(item)
+})
+timchu();
+
+// 惰性加载函数
+// 第一次会判断，然后整个函数会被重写，再次调用之后就不走判断了
+let addEvent = function () {
+  if (window.addEventListener) {
+    // 将函数重写
+    addEvent = function (element, type, handler) {
+      element.addEventListener(type, handler, false)
+    }
+  } else if (window.attachEvent) {
+    addEvent = function (element, type, handler) {
+      element.attachEvent(type, handler, false)
+    }
+  }
+}
