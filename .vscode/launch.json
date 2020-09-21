@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\Design model\\singleton.js",
+      "program": "${workspaceFolder}\\Design model\\strategy.js",
       "outFiles": [
         "${workspaceFolder}/**/*.js"
       ]
