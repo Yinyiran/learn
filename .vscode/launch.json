@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\Design model\\strategy.js",
+      "program": "${workspaceFolder}\\Design model\\publish-subscribe.js",
       "outFiles": [
         "${workspaceFolder}/**/*.js"
       ]
