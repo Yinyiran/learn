@@ -186,7 +186,7 @@ let timeChunk = function (ary, fn, count) {
   return function () {
     timer = setInterval(function () {
       if (ary.length === 0) {
-        return clearInterval(t)
+        return clearInterval(timer)
       }
       start();
     }, 200)

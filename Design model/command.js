@@ -94,8 +94,42 @@ document.onkeypress = function () {
 }
 // 重复播放之前的动作
 document.getElementById("replay").onclick = function () {
-  let command; 
+  let command;
   while (command = commandStack.shift()) { // 从堆栈里依次取出命令并执行
     command();
   }
 }
+// 宏命令（一组命令的集合）
+const closeDoorCommand = {
+  execute() {
+    console.log("close Door")
+  }
+}
+const OpenPcCommand = {
+  execute() {
+    console.log("open computer")
+  }
+}
+const OpenQQCommand = {
+  execute() {
+    console.log("login QQ ")
+  }
+}
+
+class MacroCommand {
+  commandsList = []
+  add(command) {
+    this.commandsList.push(command)
+  }
+  execute() {
+    for (let i = 0, command; command = this.commandsList[i++];) {
+      command.execute();
+    }
+  }
+}
+
+const macroCommand = new MacroCommand();
+macroCommand.add(closeDoorCommand)
+macroCommand.add(OpenPcCommand)
+macroCommand.add(OpenQQCommand)
+macroCommand.execute();
