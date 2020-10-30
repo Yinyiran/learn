@@ -8,13 +8,9 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "program": "${workspaceFolder}\\Design model\\publish-subscribe.js",
-      "outFiles": [
-        "${workspaceFolder}/**/*.js"
-      ]
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}\\Design model\\composite.js",
+      "outFiles": ["${workspaceFolder}/**/*.js"]
     }
   ]
 }
