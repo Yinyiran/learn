@@ -183,4 +183,69 @@ const finalPriceC = str =>
 const resultC = finalPriceC(200)
 console.log(resultC.inspect())
 
-  // / https://juejin.im/user/4265760847567016/posts
+// try catch 的缺点
+// 1.违反了引用透明原则，因为抛出异常会导致函数调用穿线在另一个出口，所以不能确保单一的可预测的返回值。
+// 2.会引起副作用，因为一场会在函数调用之外对堆栈引发不可预料的影响。
+// 3.不能只关心函数的返回值，调用者需要负责声明catch块中的异常匹配类型来管理特定的异常；难以与其他函数组合或链接。
+// 4.当多个异常条件出现嵌套的异常处理块。
+// 解决办法  向左向右，类似于Promise中的resolve reject
+const Left = x => ({
+  map: f => Left(x),
+  fold: (f, g) => f(x),
+  inspect: () => `Left(${x})`
+})
+const Right = x => ({
+  map: f => Right(f(x)),
+  fold: (f, g) => g(x),
+  inspect: () => `Right(${x})`
+})
+
+const getUser = id => {
+  const user = [{ id: 1, name: "Loren" }, { id: 2, name: "Zora" }].filter(x => x.id === id)[0]
+  return user ? Right(user) : Left(null) // 如果存在User就执行Right函数，如果错误及执行Left函数
+}
+const result = getUser(4).map(x => x.name).fold(() => `not found`, x => x);
+// 换一种写法
+const fromNullable = x => x != null ? Right(x) : Left(null);
+const getUser = id => fromNullable([{ id: 1, name: "Loren" }, { id: 2, name: "Zora" }].filter(x => x.id === id)[0])
+const result2 = getUser(4).map(x => x.name).fold(() => 'not found', x => x)
+
+// 包装try catch
+const tryCatch = (f) => {
+  try {
+    return Right(f())
+  } catch {
+    return Left(e)
+  }
+}
+const jsonFormat = str => JSON.parse(str)
+const app = (str) =>
+  tryCatch(() => jsonFormat(str)).map(x => x.path).fold(() => "default path", x => x)
+const result3 = app('{"path":"some path..."}') // => 'some path...'
+
+const result4 = app("the way to death") // => JSON.parse 报错；'default path'
+
+// Founctor 
+[1, 2, 3, 4].map(x => x + 1).filter(x => x > 2).map(x => x * 2)
+Promise.resolve(1).then(x => x + 1).then(x => x.toString())
+
+// 应用函子
+// 如何处理函数副作用
+// 惰性盒子LazyBox
+const LazyBox = g => ({
+  map: f => LazyBox(() => f(g())),
+  fold: f => f(g()),
+  apply: o => o.map(x)
+})
+const finalPriceD = str => {
+  LazyBox(() => str)
+    .map(x => {
+      console.log("str:", str)
+      return x;
+    })
+    .map(x => x * 2)
+    .map(x => x * 0.8)
+    .map(x => x - 50)
+}
+const app = finalPriceD(100) // 调用此函数返回的结果还是LazyBox返回的对象
+const res = app.fold(x => x); // 只有调用fold才会返回结果，保证box函数的pure
