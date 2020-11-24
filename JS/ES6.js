@@ -41,3 +41,44 @@ const getGlobal = function () {
   if (typeof global != "undefined") return global;
   throw new Error("unable to locate global object")
 }
+
+// 解构 
+// 数组按照对应顺序取值
+let [a, b, c] = ["foo", "bar", "baz"] // a:foo; b:bar; c:baz
+let [, b, c = 1] = ["foo", ["bar"]] // b:"afwe" ; c=1
+let [, ...a] = ["amze", "brave", "control"] // a:["brave","control"]
+
+function f() {
+  console.log("aaa")
+}
+let [x = f()] = [1] // f() 不会执行 因为x可以取到值
+
+let [x = 1, y = x] = []; // x =1 ; y = 1
+let [x = y, y = 1] = []; // 报错 y没有定义
+// 对象结构 没有顺序  套对象结构 
+let obj = {
+  p: ["Hello", { y: "World" }]
+}
+let { p: [x, { y }] } = obj // p是模式不是变量
+let { p, p: [x, { y }] } = obj // 此处p有值
+
+const node = {
+  loc: {
+    start: {
+      line: 1,
+      column: 5
+    }
+  }
+}
+let { loc, loc: { start }, loc: { start: { line } } } = node;
+// 此处跟别对loc，start，line三个属性解构赋值
+// 最后一次对line属性的解构赋值之中，只有line是变量，loc和start都是模式，不是变量。
+
+// 嵌套赋值
+let obj = {}
+let arr = []
+  ({ foo: obj.prop, bar: arr[0] } = { foo: 123, bar: true })
+  // obj : {prop:123} arr:[true]
+
+  // 指定默认值
+  let 

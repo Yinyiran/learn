@@ -238,3 +238,5 @@ let addEvent = function () {
     }
   }
 }
+// 精确判断对象雷西那个
+Object.prototype.toString.call([])

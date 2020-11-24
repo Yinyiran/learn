@@ -249,3 +249,148 @@ const finalPriceD = str => {
 }
 const app = finalPriceD(100) // 调用此函数返回的结果还是LazyBox返回的对象
 const res = app.fold(x => x); // 只有调用fold才会返回结果，保证box函数的pure
+
+
+
+// 项目当中，为了实现函数的复用，需要函数的指责单一
+function lowerCase(input) {
+  return input && typeof input === "string" ? input.toLowerCase() : input
+}
+function upperCase(input) {
+  return input && typeof input === "string" ? input.toUpperCase() : input;
+}
+function trim(input) {
+  return typeof input === "string" ? input.trim : input;
+}
+function split(input, delimiter = ",") {
+  return typeof input === "string" ? input.split(delimiter) : input;
+}
+const trimLowerCaseAndSplit = compose(trim, lowerCase, split)
+let a = trimLowerCaseAndSplit(" a,B,C ");
+console.log(a)
+
+function compose(...funcs) {
+  return function (x) {
+    return funcs.reduce(function (arg, fn) {
+      console.log(arg, fn)
+      return fn(arg);
+    }, x);
+  }
+}
+
+// 中间件和洋葱模型
+function compose(middleware) {
+  return function (context, next) {
+    let index = -1;
+    return dispatch(0)
+    function dispatch(i) {
+      if (i <= index) {
+        return Promise.reject(new Error("next() called multiple times"))
+      }
+      let index = i;
+      let fn = middleware[i]
+      if (i === middleware.length) fn = next;
+      if (!fn) return Promise.resolve();
+      try {
+        return Promise.resolve(fn(context, dispatch.bind(null, i + 1)))
+      } catch (err) {
+        return Promise.reject(err)
+      }
+    }
+  }
+}
+
+// 实现柯里化 
+// 当柯里化后的函数接收到足够的参数后，就会开始执行原函数。
+// 而如果接收到的参数不足的话，就会返回一个新的函数，用来接收余下的参数
+function curry(func) {
+  return function curried(...args) {
+    if (args.length >= func.length) {
+      return func.apply(this, args)
+    } else {
+      return function (...args2) {
+        return curried.apply(this, args.concat(args2))
+      }
+    }
+  }
+}
+// 案例 
+function buildUrl(scheme, domain, path) {
+  return `${scheme}://${domain}/${path}`
+}
+const buildUriCurry = curry(buildUrl)
+const myGithubPath = buildUriCurry("https", "github.com");
+// 传统写法需要重复设置相同的参数值;
+// const profilePath = buildUrl("https", "github.com", "semlinker/semlinker");
+// const awesomeTsPath = buildUrl("https", "github.com", "semlinker/awesome-typescript");
+// 设置中间函数
+const profilePath = myGithubPath("semlinker/semlinker")
+const awesomeTsPath = myGithubPath("semlinker/awesome-typescript");
+
+// 偏函数
+// 偏函数应用是固定一个函数的一个或多个参数，并返回一个可以接收剩余参数的函数；
+// 柯里化是将函数转化为多个嵌套的一元函数，也就是每个函数只接收一个参数。
+function partial(fn) {
+  let args = [].slice.call(arguments, 1)
+  return function () {
+    const newArgs = args.concat([].slice.call(arguments))
+    return fn.apply(this, newArgs)
+  }
+}
+const myGithubPath = partial(buildUrl, "https", "github.com")
+const profilePath = myGithubPath("semlinker/semlinker")
+const awesomeTsPath = myGitHubPath("semlinker/awesome-typescript")
+
+
+// 惰性载入函数
+// 当第一次根据条件执行函数后，在第二次调用函数时，就不再检测条件，直接执行函数
+// 例子 根据当前环境判断时间触发方法
+function addHandler(element, type, handler) {
+  if (element.addEventListener) {
+    addHandler = function (element, type, handler) {
+      element.addEventListener(type, handler, false)
+    }
+  } else if (element.attachEvent) {
+    addHandler = function (element, type, handler) {
+      element.attachEvent(`on${type}`, handler)
+    }
+  } else {
+    addHandler = function (element, type, handler) {
+      element[`on${type}`] = handler;
+    }
+  }
+  return addHandler(element, type, handler) // 保证是首次调用能正常执行监听
+}
+// 或者自执行函数
+const addHandler = (function () {
+  if (document.addEventListener) {
+    return function (element, type, handler) {
+      element.addEventListener(type, handler, false)
+    }
+  } else if (document.attachEvent) {
+    return function (element, type, handler) {
+      element.attachEvent(`on${type}`, handler)
+    }
+  } else {
+    return function (element, type, handler) {
+      element[`on${type}`] = handler;
+    }
+  }
+})() // 只会在加载时执行一次条件判断，对应的分支会产生新的函数
+
+
+// 缓存函数
+// 将函数的计算结果缓存起来，当下次以同样的参数调用该函数时，直接返回一缓存的结果
+function memorize(fn) {
+  const cache = Object.create(null);
+  return function (...args) {
+    const _args = JSON.stringify(args)
+    return cache[_args] || (cache[_args] = fn.apply(fn, args))
+  }
+}
+let complexCalc = (a, b) => {
+  console.log(a, b)
+}
+let memoCalc = memorize(complexCalc)
+memoCalc(666, 888)
+memoCalc(666, 888) // 从缓存中获取
