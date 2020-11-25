@@ -78,7 +78,69 @@ let { loc, loc: { start }, loc: { start: { line } } } = node;
 let obj = {}
 let arr = []
   ({ foo: obj.prop, bar: arr[0] } = { foo: 123, bar: true })
-  // obj : {prop:123} arr:[true]
+// obj : {prop:123} arr:[true]
 
-  // 指定默认值
-  let 
+// 字符串解构赋值
+let { length: len } = "hello" // 字符串对象length属性
+let [h, e, l, l, o] = "hello" // 数组
+
+// 数值和布尔值的解构赋值
+let { toString: s } = 123;
+s === Number.prototype.toString
+
+
+// 函数参数解构赋值
+function add([x, y]) {
+  return x + y;
+}
+add([1, 2]);
+[[1, 2], [3, 4]].map(([a, b]) => a + b) // [3,7]
+
+// 默认值 参数结构不出x，y会被赋默认值，没有参数
+function move({ x = 0, y = 0 } = {}) {
+  console.log([x, y])
+  return [x, y]
+}
+move({ x: 3, y: 8 }); // [3, 8]
+move({ x: 3 }); // [3, 0]
+move({}); // [0, 0]
+move(); // [0, 0]
+
+// 另一种写法  此函数为参数指定默认值，而不是为x，y指定，所以不一样
+function move({ x, y } = { x: 0, y: 0 }) {
+  console.log([x, y])
+  return [x, y]
+}
+move({ x: 3, y: 8 }); // [3, 8]
+move({ x: 3 }); // [3, undefined]
+move({}); // [undefined, undefined]
+move(); // [0, 0]
+// undefined 会触发默认值
+[1, undefined, 3].map((x = "yes") => x) // [1,"yes",3]
+
+function ajax(url, {
+  async = true,
+  beforeSend = function () { },
+  cache = true,
+  complete = function () { } },
+  crossDomain = false,
+  global = true
+) { }
+
+// 方便获取map结构的 key，value
+const map = new Map();
+map.set("first", "hello")
+map.set("second", "world")
+for (const [key, value] of map) {
+  console.log(`${key}-${value}`)
+}
+
+// 字符串
+// 可以换行
+let html = `
+<ul>
+  <li>first line </li>
+  <li>second line </li>
+</ul>
+`
+html.trim()// 可以消除换行
