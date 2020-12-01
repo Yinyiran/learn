@@ -399,69 +399,139 @@
 
 const list = [
   // 200
-  { CompID: 1001, Count: 45, Weight: 3 },
-  { CompID: 1002, Count: 55, Weight: 3 },
+  { CompID: 3001, Count: 5, Weight: 3 },
+  { CompID: 3002, Count: 5, Weight: 3 },
+  { CompID: 3003, Count: 3, Weight: 3 },
   // 400
-  { CompID: 1111, Count: 1, Weight: 2 },
-  { CompID: 1112, Count: 2, Weight: 2 },
-  { CompID: 1113, Count: 3, Weight: 2 },
-  { CompID: 1114, Count: 5, Weight: 2 },
+  { CompID: 2001, Count: 28, Weight: 2 },
+  { CompID: 2002, Count: 21, Weight: 2 },
+  { CompID: 2003, Count: 23, Weight: 2 },
+  { CompID: 2004, Count: 25, Weight: 2 },
   // 600
-  { CompID: 1211, Count: 100, Weight: 1 },
-  { CompID: 1212, Count: 100, Weight: 1 },
-  { CompID: 1213, Count: 100, Weight: 1 },
-  { CompID: 1214, Count: 100, Weight: 1 },
-  { CompID: 1215, Count: 100, Weight: 1 },
-  { CompID: 1216, Count: 100, Weight: 1 },
+  { CompID: 1001, Count: 80, Weight: 1 },
+  { CompID: 1002, Count: 90, Weight: 1 },
+  { CompID: 1003, Count: 80, Weight: 1 },
+  { CompID: 1004, Count: 70, Weight: 1 },
+  { CompID: 1005, Count: 60, Weight: 1 },
+  { CompID: 1006, Count: 50, Weight: 1 },
 ]
-
-// {
-//   CompID,
-//     Row,
-//     PageSize
-// }
 
 
 let Obj = {
-  3: { Name: '金牌', PageSize: 24, TotalCount: 0, list: [] },
-  2: { Name: '银牌', PageSize: 16, TotalCount: 0, list: [] },
-  1: { Name: '铜牌', PageSize: 8, TotalCount: 0, list: [] },
-  0: { Name: '认证', PageSize: 48, TotalCount: 0, list: [] }
+  3: { Name: '金牌', PageSize: 24, TotalCount: 0, Pages: [], list: [] },
+  2: { Name: '银牌', PageSize: 16, TotalCount: 0, Pages: [], list: [] },
+  1: { Name: '铜牌', PageSize: 8, TotalCount: 0, Pages: [], list: [] },
+  0: { Name: '认证', PageSize: 48, TotalCount: 0, Pages: [], list: [] }
 }
 
+
 list.forEach(item => {
-  Obj[item.Weight].list.push({ CompID: item.CompID, Count: item.Count })
-  Obj[item.Weight].TotalCount += item.Count
-})
+  item.length = item.Count;
+  Obj[item.Weight].list.push(item);
+  Obj[item.Weight].TotalCount += item.Count;
+});
 
-let totalCount = list.reduce((total, currentValue, index, arr) => {
-  return total + currentValue.Count
-}, 0)
-let lens = Math.ceil(totalCount / 48);
-
-let pagesList = [];
-
-
+// 将list按照CompID循环顺序，展开 返回CompID的数组
 const getWeightList = (weight) => {
   let arr = []
-  let totalCount = Obj[weight].TotalCount
-  for (let i = 0; i <= totalCount; i++) {
-    let compNum = Obj[weight].list.length;
-    let index = i % compNum;
-    let item = Obj[weight].list[index];
-    arr.push(item.CompID);
-    item.Count--;
-    if (item.Count === 0) {
-      console.log(index, i)
-      Obj[weight].list.splice(index, 1);
+  let totalCount = Obj[weight].TotalCount; // 当前类型的所有VIP数量（包括重复Comp）
+  // 如果当前Comp已经被取完，用下个
+  const getCompItem = (list) => {
+    let curindex = 0;
+    const border = () => {
+      if (curindex < list.length - 1) curindex++;
+      else curindex = 0;
     }
+    const fn = () => {
+      let curItem = list[curindex];
+      if (curItem.Count > 0) {
+        curItem.Count--;
+        border();
+        return curItem.CompID;
+      } else {
+        border();// 利用curindex++，跳过Count = 0的企业，保证企业出现的顺序
+        return fn();
+      }
+    }
+    return fn;
+  }
+  let getItemFn = getCompItem(Obj[weight].list)
+  for (let i = 0; i < totalCount; i++) {
+    arr.push(getItemFn());
   }
   return arr
 }
 
-let arrr = getWeightList(2)
-const a = "1"
-// for (let i = 0; i < lens; i++) {
-//   pagesList[i] = [];
-// }
+// 获取每一页的数据
+const getPages = () => {
+  let pageList = [];
+  let weightArr = Object.keys(Obj).sort((a, b) => b - a); // 对权重进行排序，权重高的在前面，在getExist里优先权重高的。
+  // 当前不足，利用前面的补全
+  const getExist = (len) => {
+    let existWeight = weightArr.find(weight => Obj[weight].Pages.length > 0);
+    if (existWeight) {
+      let list = Obj[existWeight].Pages.splice(0, len);
+      if (len > list.length) {
+        let nextList = getExist(list, len - list.length)
+        list.push(...nextList);
+        return list;
+      } else {
+        return list;
+      }
+    } else {
+      return []
+    }
+  }
+  // 每个类型取 PageSize个数的CompID，如果不足可以补全
+  for (let i = 0; i < weightArr.length; i++) {
+    let item = Obj[weightArr[i]]
+    let list = item.Pages.splice(0, item.PageSize);
+    if (list.length < item.PageSize && item.TotalCount > 0) {
+      let supplement = getExist(item.PageSize - list.length)
+      list.push(...supplement);
+    }
+    pageList.push(...list);
+  }
+  return pageList;
+}
 
+// 获取每个企业在该分页下面的数量和游标
+const getCompNum = (list, index) => {
+  let compObj = {}
+  list.forEach(compId => {
+    if (compObj[compId]) {
+      compObj[compId].PageSize++
+    } else {
+      let row = 0;
+      if (index > 0) {
+        let preComp = pages[index - 1].Comp[compId];
+        row = preComp ? (preComp.Row + preComp.PageSize) : 0;
+      }
+      compObj[compId] = { Row: row, PageSize: 1 };
+    }
+  });
+  return compObj;
+}
+
+let pages = []; // 分页数据；
+let totalNum = 0; // 分页数据；
+let pageLen = 0; // 所有数据长度
+
+for (const weight in Obj) {
+  const item = Obj[weight];
+  item.Pages = getWeightList(weight);
+  pageLen += item.Pages.length;
+}
+let pageNum = Math.ceil(pageLen / 48); // 总共多少页
+
+for (let i = 0; i < pageNum; i++) {
+  const List = getPages(); // 当前分页的所有数据（CompID排序）
+  const Comp = getCompNum(List, i);
+  const Params = []
+  for (const compId in Comp) {
+    Params.push({ CompID: compId, ...Comp[compId] })
+  }
+  pages[i] = { List, Comp, Params };
+  totalNum += List.length
+}
+const a = 1
