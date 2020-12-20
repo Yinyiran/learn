@@ -16,29 +16,29 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import MForm from "./form/MForm.vue";
 import FormItem from "./form/FormItem.vue";
 import MInput from "./form/MInput.vue";
 import { createEl } from "../service/util.js";
-import Message from "./notice/Message";
+import Message from "./notice/Message.vue";
 
 export default {
   components: { FormItem, MInput, MForm },
   name: "HelloWorld",
   props: {
-    msg: String
+    msg: String,
   },
   data() {
     return {
       model: {
         username: "",
-        password: ""
+        password: "",
       },
       rules: {
         username: { require: true, message: "用户名必填" },
-        password: { require: true, message: "密码必填" }
-      }
+        password: { require: true, message: "密码必填" },
+      },
     };
   },
   methods: {
@@ -46,9 +46,11 @@ export default {
       this.$refs.formRef.validate();
       createEl(Message, { message: "保存成功" });
       this.$bus.emit("test$bus", "this is a test about $bus");
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped></style>
+https://juejin.cn/post/6907831475089965064?utm_source=gold_browser_extension
+https://jkchao.github.io/typescript-book-chinese/project/compilationContext.html#tsconfig-json

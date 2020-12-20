@@ -51,6 +51,7 @@ let nul: null = null;
 //#endregion
 
 //#region 接口  
+// 用个变量来存储传入的变量, 这样可以传入定义的接口以外的值，否则如果直接传入对象中无接口定义的值会报错，所以建议接口定义了哪些值就传哪些值。
 // 接口
 interface SquareConfig {
   color: string;
@@ -65,111 +66,21 @@ let readOnlyArr: ReadonlyArray<number> = [1, 2, 4, 4]
 interface searchFunc {
   (source: string, subString: string): boolean // 参数source subString ,返回值类型Bollean
 }
+// 约束数组
+interface Arr {
+  [index: number]: string
+}
+let ss: Arr = ["234"];
+interface Obj {
+  [index: string]: string
+}
+let ob: Obj = { a: "1" }
+
 
 let mySearch: searchFunc;
 mySearch = function (source: string, subString: string): boolean {
   return source + subString === ""
 }
-//#endregion
-
-//#region 函数  
-interface User {
-  name: string;
-  id: number;
-}
-// 函数参数和返回值  默认参数和省略参数是一样的 外部可以不传参
-// userA({ name: "fawe", id: 22 })
-function userA(params: User, some = "smaith"): string {
-  console.log(some);
-  return JSON.stringify(params)
-}
-// 函数返回值
-function userB(): User {
-  return { name: "qafew", id: 1 }
-}
-// 剩余参数  
-function userC(a: string, ...b: string[]): void {
-  console.log(a, b);
-
-}
-// 函数无返回值  void
-function warnUser(): void {
-  console.log("This function has no return value");
-}
-// 函数参数多种类型
-function getlen(obj: string | string[]): number {
-  return obj.length
-}
-// never
-function error(): never {
-  throw "this is an error"
-}
-function nuLives([a1, b1]: [number, number]) {
-  const a = "aa"
-  return a
-}
-// this 的值在函数被调用的时候才会指定
-interface Deck {
-  suits: string[];
-  cards: number[];
-  createCardPicker(this: Deck): () => {};
-}
-let deck = {
-  suits: ["hearts", "spades", "clubs", "diamonds"],
-  cards: Array(52),
-  //指定thi环境（假参数，出现在参数列表最前面，只能指定的this环境调用）
-  createCardPicker: function (this: Deck, name: string) {
-    // 箭头函数能保存函数创建时的 this
-    return () => {
-      let pickedCard = Math.floor(Math.random() * 52)
-      let pickedSuit = Math.floor(pickedCard / 13)
-      return { suit: this.suits[pickedSuit], card: pickedCard % 13 }
-    }
-  }
-}
-// 数据类型
-type Easing = "ease-in" | "ease-out" | "ease-in-out"
-// 数字类型
-function rollDice(): 1 | 2 | 3 | 4 | 5 {
-  return (Math.floor(Math.random() * 6) + 1) as 1 | 2 | 3 | 4 | 5;
-}
-class UIElement {
-  animate(dx: number, dy: number, easing: Easing) {
-    console.log(dy, dx, easing)
-  }
-}
-let button = new UIElement();
-button.animate(0, 0, "ease-in");
-type NetworkLoadingState = {
-  state: string;
-}
-type NetworkFailedState = {
-  state: "failed";
-  code: number;
-}
-type NetworkSuccessState = {
-  state: "success";
-  respones: {
-    title: string;
-    duration: number;
-    summary: string;// 摘要
-  }
-}
-type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState;
-// function networkStatus(state: NetworkState): string {
-//   // return state.code // 必须是三个类型都同时存在的属性才能调用
-//   switch (state.state) {
-//     case "loading":
-//       return "Downloading..."
-//     case "failed":
-//       return `Error ${state.code} downloading`
-//     case "success":
-//       return `Error ${state.respones.title} - ${state.respones.summary}`
-//     default:
-//       return ""
-//   }
-// }
-// button.animate(0, 0, "ease-inout")
 //#endregion
 
 //#region  泛型 
@@ -220,198 +131,7 @@ let loadput = loggingIdentity([123]);
 // let obj = { a: 1, b: 2, c: 3, d: 4 }
 // getProperty(obj, "a")
 
-class BeeKeeper {
-  hasMask: boolean;
-}
 
-class ZooKeeper {
-  nametag: string;
-}
-
-class Animal2 {
-  numLegs: number;
-}
-
-class Bee extends Animal2 {
-  keeper: BeeKeeper;
-}
-
-class Lion extends Animal2 {
-  keeper: ZooKeeper;
-}
-
-function createInstance<A extends Animal2>(c: new () => A): A {
-  return new c();
-}
-
-//#endregion
-
-//#region 类   
-// 类 
-class Greeter {
-  greeting: string; // 属性
-  // 构造函数  
-  constructor(message: string) {
-    this.greeting = message;
-  }
-  // 方法
-  greet() {
-    return "Hello" + this.greeting;
-  }
-}
-// 构造类实例
-let greeter = new Greeter("world")
-console.log(greeter)
-
-// 继承
-class Animal {
-  name: string; // 默认public
-  #maxLen: number; // 私有属性 只能类内部使用 派生类、实例不能访问 同private age
-  private _fullName = "";
-  protected location: string; // 基类和派生类当中能访问  实例当中不能访问
-  readonly height: number; // 只读属性
-  static origin = { x: 0, y: 0 } // 静态属性，存在于类本身而不是类的实例上(其他属性都是实例化之后才会被初始化) 访问时需要加基类名：Animal.orrigin
-  // 构造函数    readonly width: number 同height 但是简写
-  constructor(theName: string, len = 0, readonly width?: number) {
-    this.name = theName;
-    this.#maxLen = len;
-    this.height = 20;// 初始化时可以赋值；
-    this.location = ""
-    console.log(Animal.origin);
-  }
-  // 存取器
-  get fullName(): string {
-    return this._fullName;
-  }
-  set fullName(newName: string) {
-    if (newName && newName.length > this.#maxLen) {
-      throw new Error(`fullName has a max length of ${this.#maxLen}`)
-    }
-    this._fullName = newName;
-  }
-  move(distanceInMeters: number) {
-    console.log(`${this.name} moved ${distanceInMeters}`)
-  }
-}
-// D  og(派生类) 从基类Animal(超类)继承了 属性和方法；
-class Dog extends Animal {
-  constructor(name: string) {
-    super(name, 10) // 在使用this之前调用super() 
-  }
-  // 此处重写了基类的move方法
-  move(distanceInMeters = 5) {
-    console.log("dog run");
-    console.log(this.location); // 可以访问protected属性
-    super.move(distanceInMeters) // 调用基类的方法
-  }
-}
-class Horse extends Animal {
-  constructor(name: string) {
-    super(name, 10) // 执行基类的构造函数
-  }
-  // 重写父类方法
-  move(distanceInMeters = 5) {
-    console.log(`Galloping...`)
-    super.move(distanceInMeters)
-  }
-}
-const dog = new Dog("Sammy the Python")
-const tom: Animal = new Horse("Tommy the Palomino")
-dog.move();
-tom.move(20);
-
-dog.fullName = "fawejfo" //
-console.log(dog.fullName);
-
-// 抽象类  作为基类使用，不会呗实例化，抽象方法必须在派生类中实现
-abstract class Human {
-  country: string;
-  abstract makeSound(): void; // 必须在派生类当中实现
-  constructor(country: string) {
-    this.country = country
-  }
-  sayHi(): void {
-    console.log(`Hello I'm ${this.country}`);
-  }
-}
-class America extends Human {
-  constructor() {
-    super("America")
-  }
-  makeSound(): void {
-    console.log("I speack English")
-  }
-  notInAbstract(): void {
-    console.log("south ")
-  }
-}
-let man = new America();
-man.notInAbstract();
-
-
-// 把类作为接口使用
-class PointA {
-  x?: number;
-  y?: number;
-}
-interface Point3d extends PointA {
-  z: number;
-}
-let point3d: Point3d = { x: 1, y: 2, z: 3 }
-
-//#endregion
-
-//#region  实用类型
-// Partial 类型转换为？
-interface Todo {
-  title: string;
-  description: string;
-}
-// type a = Partial<Todo>
-function updateTodo(todo: Todo, fieldsToUpdate: Partial<Todo>) {
-  return { ...todo, ...fieldsToUpdate }
-}
-const todo1 = {
-  title: "organize desk",
-  description: "clear clutter"
-}
-const todo2 = updateTodo(todo1, {
-  description: "throw out trash"
-})
-// 转换为只读 
-const todo3: Readonly<Todo> = {
-  title: "name",
-  description: "string"
-}
-// Record type转object
-interface PageInfo {
-  title: string
-}
-type Page = "home" | "about" | "contact"
-const nav: Record<Page, PageInfo> = {
-  about: { title: "about", },
-  home: { title: "home", },
-  contact: { title: "contact", },
-}
-// Pick  取部分字段
-interface Todo2 {
-  title: string;
-  description: string;
-  completed: boolean;
-}
-type TodoPreview = Pick<Todo2, "title" | "completed">
-const todo4: Readonly<TodoPreview> = {
-  title: "name",
-  completed: false
-}
-// 排除 "a"
-type T0 = Exclude<"a" | "b" | "c", "a"> // T0 : "b"|"c"
-// 包含 "a"
-type T1 = Extract<"a" | "b" | "c", "a"> // T0 : "a"
-
-let personProps: keyof Todo2 = "title";
-
-//#endregion
 
 //#region Symbols  不可改变并且唯一
 let syml = Symbol("keyof");
