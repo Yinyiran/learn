@@ -534,4 +534,30 @@ for (let i = 0; i < pageNum; i++) {
   pages[i] = { List, Comp, Params };
   totalNum += List.length
 }
-const a = 1
+const a = 1;
+
+// reduce 求最大者 找出日期最大的一天
+const dates = ["2010/06/01", "2010/07/02", "2010/08/03", "2010/05/04"]
+const maxDate = dates.reduce((max, d) => d > max ? date : max, dates[0]);
+// 分组计数 例子：统计age相同的数量 {29:2,58:1}
+const characters = [
+  { name: "Tom", age: 58 },
+  { name: "Jack", age: 29 },
+  { name: "Bruce", age: 29 },
+]
+const reducer = (map, val) => {
+  map[val] = map[val] || 1;
+  ++map[val];
+  return map;
+}
+const result = characters.map(char => char.age).reduce(reducer, {});
+
+// Promise 动态链式调用 ； 例子：按顺序执行异步函数数组
+const functions = [
+  async function () { return 1 },
+  async function () { return 2 },
+  async function () { return 3 },
+  async function () { return 4 }
+]
+// 最后`res`的结果等价于`Promise.resolve().then(fn1).then(fn2).then(fn3).then(fn4)`
+const res = await functions.reduce((promise, fn) => promise.then(fn), Promise.resolve())
