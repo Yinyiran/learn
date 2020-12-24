@@ -1,4 +1,5 @@
 
+
 //#region  实用类型
 // Partial 类型转换为？
 interface Todo {
@@ -11,6 +12,7 @@ function updateTodo(todo: Todo, fieldsToUpdate: Partial<Todo>) {
 }
 const todo1 = {
   title: "organize desk",
+  name: 20,
   description: "clear clutter"
 }
 const todo2 = updateTodo(todo1, {

@@ -83,18 +83,34 @@ type NetworkSuccessState = {
   }
 }
 type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState;
-// function networkStatus(state: NetworkState): string {
-//   // return state.code // 必须是三个类型都同时存在的属性才能调用
-//   switch (state.state) {
-//     case "loading":
-//       return "Downloading..."
-//     case "failed":
-//       return `Error ${state.code} downloading`
-//     case "success":
-//       return `Error ${state.respones.title} - ${state.respones.summary}`
-//     default:
-//       return ""
-//   }
-// }
+function networkStatus(state: NetworkState): string {
+  // return state.code // 必须是三个类型都同时存在的属性才能调用
+  switch (state.state) {
+    case "loading":
+      return "Downloading..."
+    case "failed":
+      return `Error ${state.code} downloading`
+    case "success":
+      return `Error ${state.respones.title} - ${state.respones.summary}`
+    default:
+      return ""
+  }
+}
 // button.animate(0, 0, "ease-inout")
+
+// 交叉类型
+function extend<T extends object, U extends object>(first: T, second: U): T & U {
+  const result = <T & U>{};
+  for (let id in first) {
+    (<T>result)[id] = first[id];
+  }
+  for (let id in second) {
+    if (!result.hasOwnProperty(id)) {
+      (<U>result)[id] = second[id]
+    }
+  }
+  return result;
+}
+const x = extend({ a: "hello" }, { b: 42 })
+// 现在 x 拥有了 a 属性与b属性；
 //#endregion

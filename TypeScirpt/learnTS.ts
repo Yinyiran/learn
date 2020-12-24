@@ -10,8 +10,12 @@ let list2: Array<string> = ["1", "2"]
 const typeNum = Object.prototype.toString.call(1);
 
 // 原数组
-let x: [string, number] // 声明原数组类型
-x = ['22', 222] // 初始化 x
+let x1: [string, number] // 声明原数组类型
+x1 = ['22', 222] // 初始化 x
+
+type Text1 = string | { text: string };
+type Coordinates = [string, number];
+type Callback = (data: string) => void;
 
 // 枚举类型 
 
