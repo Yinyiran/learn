@@ -1,0 +1,18 @@
+{
+  "name": "learn",
+  "version": "0.0.1",
+  "description": "前端学习笔记/demo",
+  "scripts": {
+    "test": ""
+  },
+  "husky": {
+    "pre-commit": "lint-staged",
+    "commit-msg": "node .vscode/verify-commit.js",
+    "pre-push": "npm test"
+  },
+  "devDependencies": {
+    "chalk": "^4.1.0",
+    "eslint": "^7.20.0",
+    "husky": "^5.1.1"
+  }
+}
