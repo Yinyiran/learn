@@ -6,13 +6,20 @@
     "test": ""
   },
   "husky": {
-    "pre-commit": "lint-staged",
-    "commit-msg": "node .vscode/verify-commit.js",
-    "pre-push": "npm test"
+    "hookes": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "node script/verify-commit.js",
+      "pre-push": "npm test"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": "eslint",
+    "test/**/*.{js,jsx,ts,tsx}": "eslint"
   },
   "devDependencies": {
     "chalk": "^4.1.0",
     "eslint": "^7.20.0",
-    "husky": "^5.1.1"
+    "husky": "^5.1.1",
+    "lint-staged": "^10.5.4"
   }
 }
