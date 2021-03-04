@@ -23,3 +23,27 @@ test("abs", () => {
   expect(abs(0)).toBe(1);
   expect(() => abs("abc")).toThrow(TypeError);
 });
+
+document.querySelector("input").onchange = function (e) {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.onload = (res) => {
+    const fileResult = res.target.result;
+    console.log(fileResult);
+  };
+  reader.readAsDataURL(file);
+};
+
+document.querySelector("input").onchange = function (e) {
+  const file = e.target.files[0];
+  tobase64(file);
+};
+function tobase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (res) => {
+      const fileResult = res.target.result;
+      resolve(fileResult);
+    };
+  });
+}
