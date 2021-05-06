@@ -1,4 +1,5 @@
 "use strict"
+import { Animal } from "./ClassTs";
 //#region 基本类型  
 // 类型
 // 判断类型 借用Object.toString方法

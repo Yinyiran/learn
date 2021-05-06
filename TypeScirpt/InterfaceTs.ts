@@ -38,6 +38,7 @@ interface Todo2 {
   title: string;
   description: string;
   completed: boolean;
+  // [prop:string]:any
 }
 type TodoPreview = Pick<Todo2, "title" | "completed">
 const todo4: Readonly<TodoPreview> = {
@@ -77,5 +78,11 @@ let db = new Db<User>();
 db.add(u)
 db.updated(u, 1)
 
-
+const girl: () => string = () => {
+  return "name"
+}
+function getTotal(one: number, two: number) {
+  return one + two;
+}
+const a = getTotal(1, 2)
 //#endregion

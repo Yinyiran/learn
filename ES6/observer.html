@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="container"></div>
+  </body>
+  <script>
+    function observer(target) {
+      const div = document.getElementById("container");
+      const ob = {};
+      const props = Object.keys(target);
+      for (const prop of props) {
+        Object.defineProperty(ob, prop, {
+          get() {
+            return target[prop];
+          },
+          set(val) {
+            target[prop] = val;
+          },
+          enumerable: true,
+        });
+      }
+      render();
+      function render() {
+        let html = "";
+        for (const prop of Object.keys(ob)) {
+          html += `<p>
+            ${prop} : ${ob[prop]}
+            </p>
+            `;
+        }
+        console.log(html);
+        div.innerHTML = html;
+      }
+
+      return ob;
+    }
+
+    const target = { a: 1, b: 2 };
+    target.c = 3;
+    const obj = observer(target);
+  </script>
+</html>

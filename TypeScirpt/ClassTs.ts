@@ -119,7 +119,7 @@ abstract class Human {
   sayHi(): void {
     console.log(`Hello I'm ${this.country}`);
   }
-  sayHou():string{
+  sayHou(): string {
     return "lalal"
   }
 }
@@ -149,3 +149,5 @@ interface Point3d extends PointA {
 let point3d: Point3d = { x: 1, y: 2, z: 3 }
 
 //#endregion
+
+export { Animal };
