@@ -1,11 +1,14 @@
 <template>
   <div class="around">
-    <div class="left" v-drag:around></div>
+    <div
+      class="left"
+      v-drag:around="{ length: 270 }"
+    ></div>
     <div class="right"></div>
   </div>
   <div class="updown">
-    <div class="top"></div>
-    <div class="bottom" v-drag:updown></div>
+    <div class="top" v-drag:updown="{ length: 270 }"></div>
+    <div class="bottom"></div>
   </div>
 </template>
 <script lang="ts">
@@ -14,36 +17,28 @@ export default defineComponent({
   data() {
     return {};
   },
+  mounted() {
+    // document.querySelector("id")?.classList.
+  },
 });
 </script>
 <style lang="less">
 .around {
-  height: 30%;
-  display: flex;
-  .left,
-  .right {
-    width: 50%;
-    height: 100%;
-  }
+  height: 50%;
 }
 .updown {
   height: 70%;
-  .top,
-  .bottom {
-    height: 50%;
-    width: 100%;
-  }
 }
 .left {
-  background-color: rgb(255, 211, 211);
+  background-color: #ffd3d3;
 }
 .top {
-  background-color: rgb(255, 241, 211);
+  background-color: #fff1d3;
 }
 .right {
-  background-color: rgb(211, 255, 217);
+  background-color: #d3ffd9;
 }
 .bottom {
-  background-color: rgb(223, 211, 255);
+  background-color: #dfd3ff;
 }
 </style>

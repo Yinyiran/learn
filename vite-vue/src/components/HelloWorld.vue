@@ -1,8 +1,10 @@
 <template>
   <h1>{{ msg }}</h1>
-
+  <div class="angle"></div>
   <p>
-    Recommended IDE setup:
+    <span class="tooltip" :data-tooltip="`Recommended IDE setup,${tooltip}`"
+      >Recommended IDE setup:</span
+    >
     <a href="https://code.visualstudio.com/" target="_blank">VSCode</a>
     +
     <a
@@ -62,6 +64,7 @@ export default defineComponent({
   data() {
     return {
       list: ["1", "2", "3", "4"],
+      tooltip: "this is a pure css tooltip",
     };
   },
   methods: {
@@ -83,7 +86,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style scoped lang="less">
 a {
   color: #42b983;
 }
@@ -98,5 +101,58 @@ code {
   padding: 2px 4px;
   border-radius: 4px;
   color: #304455;
+}
+.angle {
+  display: inline-block;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #062b45 transparent transparent transparent;
+}
+.tooltip {
+  position: relative;
+  border-bottom: 1px dotted black;
+  &:hover {
+    &::before,
+    &::after {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+/* Tooltip box */
+.tooltip:before {
+  content: attr(data-tooltip);
+  position: absolute;
+  background-color: #062b45;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  line-height: 1.2;
+  border-radius: 6px;
+  max-width: 100%;
+  min-width: 60%;
+  opacity: 0;
+  transition: opacity 0.6s;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75em;
+  visibility: hidden;
+}
+
+/* Tooltip arrow */
+.tooltip:after {
+  content: "";
+  position: absolute;
+  bottom: 75%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  opacity: 0;
+  transition: opacity 0.6s;
+  border-color: #062b45 transparent transparent transparent;
+  visibility: hidden;
 }
 </style>
