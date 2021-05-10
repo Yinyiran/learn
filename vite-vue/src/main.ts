@@ -11,7 +11,7 @@ app.use(rotuer);
 app.directive("drag", {
   mounted(el, binding) {
     console.log(binding);
-    let dragDom = document.createElement("div");**
+    let dragDom = document.createElement("div");
     dragDom.classList.add(`drag-block`);
     const { length = 200, minLen = 100, maxLen = 1000 } = binding.value;
 
