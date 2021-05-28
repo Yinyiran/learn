@@ -13,6 +13,9 @@
         <button @click="submit">保存</button>
       </form-item>
     </m-form>
+    <template slot="title"></template>
+    <template slot></template>
+    <template slot="footer"></template>
   </div>
 </template>
 

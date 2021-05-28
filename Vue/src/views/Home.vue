@@ -2,7 +2,18 @@
   <div class="home">
     <img alt="Vue logo" @click="broadFn" src="../assets/logo.png" />
     <div class="content">
-      <HelloWorld msg="Welcome to Your Vue.js App" />
+      <HelloWorld msg="Welcome to Your Vue.js App">
+        <template v-slot:title>
+          <p>slot-title</p>
+        </template>
+        <template v-slot>
+          <p>slot-default</p>
+        </template>
+        <template v-slot:footer>Hello-world title</template>
+        <template v-slot:hello="props">
+          <h5>{{ props }}</h5>
+        </template>
+      </HelloWorld>
     </div>
   </div>
 </template>
@@ -19,7 +30,7 @@ export default {
   methods: {
     broadFn() {
       broadcase.call(this, "form-item", "acceptBroad", "Home  broadFn()");
-    }
+    },
   },
   created() {
     Vue.component("comp-exam", {
@@ -32,11 +43,11 @@ export default {
       },
       props: {
         name: {
-          type: String
-        }
-      }
+          type: String,
+        },
+      },
     });
-  }
+  },
 };
 </script>
 <style>
