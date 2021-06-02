@@ -9,10 +9,7 @@
         <template v-slot>
           <p>slot-default</p>
         </template>
-        <template v-slot:footer>Hello-world title</template>
-        <template v-slot:hello="props">
-          <h5>{{ props }}</h5>
-        </template>
+        <template v-slot:footer><p>Hello-world title</p></template>
       </HelloWorld>
     </div>
   </div>

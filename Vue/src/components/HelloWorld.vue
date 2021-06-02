@@ -13,9 +13,10 @@
         <button @click="submit">保存</button>
       </form-item>
     </m-form>
-    <template slot="title"></template>
-    <template slot></template>
-    <template slot="footer"></template>
+    <slot name="title"></slot>
+    <slot></slot>
+    <slot name="footer"></slot>
+    <slot name="hello" :user="{ a: 'a' }" :hah="{ row: 'row' }"></slot>
   </div>
 </template>
 
@@ -30,18 +31,18 @@ export default {
   components: { FormItem, MInput, MForm },
   name: "HelloWorld",
   props: {
-    msg: String
+    msg: String,
   },
   data() {
     return {
       model: {
         username: "",
-        password: ""
+        password: "",
       },
       rules: {
         username: { require: true, message: "用户名必填" },
-        password: { require: true, message: "密码必填" }
-      }
+        password: { require: true, message: "密码必填" },
+      },
     };
   },
   methods: {
@@ -49,8 +50,8 @@ export default {
       this.$refs.formRef.validate();
       createEl(Message, { message: "保存成功" });
       this.$bus.emit("test$bus", "this is a test about $bus");
-    }
-  }
+    },
+  },
 };
 </script>
 

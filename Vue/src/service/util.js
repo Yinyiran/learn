@@ -13,16 +13,40 @@ export const createEl = (component, props) => {
     document.body.removeChild(vm.$el);
     vm.$destroy();
   };
-  setTimeout(() => {
-    comp.remove();
-  }, 2000);
+  // setTimeout(() => {
+  //   comp.remove();
+  // }, 2000);
   return comp;
 };
 
 
 export const uuidv4 = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    let r = Math.random() * 16 | 0
+    let v = c == 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
   });
 }
+
+
+export const delay2 = (() => {
+  let timer = null;
+  return function (fn) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn();
+    }, 500);
+  }
+})();
+
+export const throttle = (() => {
+  let timer = null;
+  return (fn) => {
+    if (timer) return;
+    timer = setTimeout(() => {
+      fn();
+      clearTimeout(timer);
+      timer = null;
+    }, 500);
+  }
+})();
