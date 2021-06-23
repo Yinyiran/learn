@@ -46,8 +46,8 @@ export default {
               // 范围约束：不能大约最大值或者父级的宽度，不能小于最小值
               const parentHeight = el.parentNode.offsetHeight;
               if (minHeight >= lang) {
-                el.style.height = `0px`;
-                el.nextSibling.style.top = `0px`;
+                el.style.height = `${minHeight}px`;
+                el.nextSibling.style.top = `${minHeight}px`;
               } else if (parentHeight <= lang && maxHeight >= parentHeight) {
                 el.style.height = parentHeight;
                 el.nextSibling.style.top = `${parentHeight}px`;
