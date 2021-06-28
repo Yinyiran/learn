@@ -16,7 +16,6 @@ import Routes from "./router";
 export default defineComponent({
   provide: {
     appData: "provide app.vue",
-    hahah: ["ssss"],
   },
   methods: {
     toRoute(index: string) {
