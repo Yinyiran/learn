@@ -12,23 +12,20 @@ export default {
           el.nextSibling.style.cssText = `position:absolute;top:0;right:0;left:${width}px;bottom:0`;
           dragDom.addEventListener("mousedown", (e: any) => {
             document.onmousemove = (event: any) => {
-              console.log();
               let lang = event.clientX - el.parentNode.offsetLeft;
-
               const parentWidth = el.parentNode.offsetWidth;
+              let width = "";
               if (minWidth >= lang) {
-                el.style.width = `${minWidth}px`;
-                el.nextSibling.style.left = `${minWidth}px`;
+                width = `${minWidth}px`;
               } else if (parentWidth <= lang && maxWidth >= parentWidth) {
-                el.style.width = parentWidth;
-                el.nextSibling.style.left = `${parentWidth}px`;
+                width = `${parentWidth}px`;
               } else if (maxWidth <= lang) {
-                el.style.width = maxWidth;
-                el.nextSibling.style.left = `${maxWidth}px`;
+                width = `${maxWidth}px`;
               } else {
-                el.style.width = `${lang}px`;
-                el.nextSibling.style.left = `${lang}px`;
+                width = `${lang}px`;
               }
+              el.style.width = width;
+              el.nextSibling.style.left = width;
             };
             document.onmouseup = () => {
               document.onmousemove = null;
@@ -45,19 +42,18 @@ export default {
               let lang = event.clientY - el.parentNode.offsetTop;
               // 范围约束：不能大约最大值或者父级的宽度，不能小于最小值
               const parentHeight = el.parentNode.offsetHeight;
+              let height = "";
               if (minHeight >= lang) {
-                el.style.height = `${minHeight}px`;
-                el.nextSibling.style.top = `${minHeight}px`;
+                height = `${minHeight}px`;
               } else if (parentHeight <= lang && maxHeight >= parentHeight) {
-                el.style.height = parentHeight;
-                el.nextSibling.style.top = `${parentHeight}px`;
+                height = `${parentHeight}px`;
               } else if (maxHeight <= lang) {
-                el.style.height = maxHeight;
-                el.nextSibling.style.top = `${maxHeight}px`;
+                height = `${maxHeight}px`;
               } else {
-                el.style.height = `${lang}px`;
-                el.nextSibling.style.top = `${lang}px`;
+                height = `${lang}px`;
               }
+              el.style.height = height;
+              el.nextSibling.style.top = height;
             };
             document.onmouseup = () => {
               document.onmousemove = null;

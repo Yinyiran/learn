@@ -1,14 +1,11 @@
 <template>
   <a-button type="primary">ant-design-button</a-button>
   <a-tree
-    checkable
     :tree-data="treeData"
     v-model:expandedKeys="expandedKeys"
     v-model:selectedKeys="selectedKeys"
     v-model:checkedKeys="checkedKeys"
-  >
-    <template #title0010><span style="color: #1890ff">sss</span></template>
-  </a-tree>
+  ></a-tree>
 </template>
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
@@ -23,8 +20,15 @@ const treeData: TreeDataItem[] = [
         title: "parent 1-0",
         key: "0-0-0",
         children: [
-          { title: "leaf", key: "0-0-0-0" },
           { title: "leaf", key: "0-0-0-1" },
+          {
+            title: "parent 1-0-0-0",
+            key: "1-0-0-1",
+            children: [
+              { title: "leaf1", key: "1-0-0-2" },
+              { title: "leaf2", key: "1-0-0-3" },
+            ],
+          },
         ],
       },
       {
