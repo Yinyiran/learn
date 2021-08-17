@@ -6,5 +6,6 @@
     "**/.factorypath": true
   },
   "editor.formatOnPaste": true,
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "livePreview.defaultPreviewPath": "/vite-vue/index.html"
 }

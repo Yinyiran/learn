@@ -5,13 +5,15 @@ import Slot from "../components/slot.vue"
 import SetUp from "../components/setup.vue"
 import Directive from "../components/directive.vue"
 import AntDesign from "../components/AntDesign.vue"
+import DefineProperty from "../components/defineProperty.vue"
 const routes = [
   { path: '/', redirect: "/index" },
   { path: '/index', component: Index, meta: { title: "首页" } },
   { path: '/slot', component: Slot, meta: { title: "插槽" } },
   { path: '/setup', component: SetUp, meta: { title: "组合API" } },
   { path: '/directive', component: Directive, meta: { title: "指令" } },
-  { path: '/ant-design', component: AntDesign, meta: { title: "ant-ui" } },
+  { path: '/ant-design', component: AntDesign, meta: { title: "AntUI" } },
+  { path: '/defineProperty', component: DefineProperty, meta: { title: "代理" } },
   {
     path: '/routerView',
     component: { template: "<router-view></router-view>" },

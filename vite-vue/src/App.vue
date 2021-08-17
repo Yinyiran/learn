@@ -1,12 +1,14 @@
 <template>
   <div class="tab">
-    <span v-for="tab in tabs" @click="toRoute(tab.route)">{{ tab.title }}</span>
+    <span
+      v-for="tab in tabs"
+      :class="{ active: curTab === tab.route }"
+      @click="toRoute(tab.route)"
+    >{{ tab.title }}</span>
   </div>
   <div class="router-view">
     <router-view v-slot="{ Component }">
-      <keep-alive>
-        <component :is="Component" />
-      </keep-alive>
+      <component :is="Component" />
     </router-view>
   </div>
 </template>
@@ -17,9 +19,15 @@ export default defineComponent({
   provide: {
     appData: "provide app.vue",
   },
+  data() {
+    return {
+      curTab: "/index",
+    };
+  },
   methods: {
-    toRoute(index: string) {
-      this.$router.push(index);
+    toRoute(route: string) {
+      this.$router.push(route);
+      this.curTab = route;
     },
   },
   computed: {
@@ -59,11 +67,13 @@ body {
   padding: 20px;
   span {
     display: inline-block;
-    padding: 6px 20px;
-    color: dodgerblue;
+    padding: 6px 10px;
     text-decoration: underline;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 18px;
+    &.active {
+      color: dodgerblue;
+    }
   }
 }
 .router-view {

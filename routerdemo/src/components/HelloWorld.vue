@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     imgClick() {
-      this.$router.push("about");
+      this.$router.push("about/child");
     },
   },
 };
