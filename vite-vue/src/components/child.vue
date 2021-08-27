@@ -4,10 +4,10 @@
   <Descendant />
 </template>
 <script lang="ts" setup>
-import Descendant from "./descendant.vue"
-import { inject } from "vue"
-const appData = inject("appData")
-const name = "child-component"
+import Descendant from "./descendant.vue";
+import { inject } from "vue";
+const appData = inject("appData");
+const name = "child-component";
 </script>
 <style lang="less">
 .child-name {

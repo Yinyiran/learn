@@ -83,3 +83,32 @@
 5. 组件内守卫：beforeRouteLeave 导航离开该组件时被调用，可以调用 this
 6. 组件内守卫：beforeRouteUpdate 导航离开该组件组件被复用（该组件多个地方同时被调用）时调用，可以调用 this
 7. 利用 meta 可以携带数据，判断是否要检测授权，改变 title 等页面统一处理的操作
+
+### 路由知识点
+
+1. 路由传参：
+   - 动态路由：{path: '/user/:id'} 可以通过 this.$route.params.id 获取到 id
+   - 如果 props 被设置为 true，route.params 将会被设置为组件属性。
+2. 以 / 开头的嵌套路径会被当作根路径。 这让你充分的使用嵌套组件而无须设置嵌套的路径
+3. 动态路由没有匹配成功可以设置一个空路由承接例如：{ path: '', component: UserHome }
+4. 路由定义得越早，优先级就越高。
+5. 命名视图 展示多个视图
+   ```html
+   <router-view class="view one"></router-view>
+   <router-view class="view two" name="a"></router-view>
+   <router-view class="view three" name="b"></router-view>
+   ```
+   ```js
+   const router = new VueRouter({
+     routes: [
+       {
+         path: "/",
+         components: {
+           default: Foo, // 默认视图
+           a: Bar, // name="a" 的视图
+           b: Baz,
+         },
+       },
+     ],
+   });
+   ```
