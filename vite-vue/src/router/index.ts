@@ -1,4 +1,3 @@
-import { h } from "vue"
 import { createRouter, createWebHistory } from "vue-router"
 import Index from "../components/index.vue"
 import Slot from "../components/slot.vue"
@@ -7,9 +6,18 @@ import Directive from "../components/directive.vue"
 import AntDesign from "../components/AntDesign.vue"
 import DefineProperty from "../components/defineProperty.vue"
 import RouterView from "../components/routerview.vue"
+import IndexFooter from "../components/IndexFooter.vue"
 const routes = [
-  { path: '/', redirect: "/index" },
-  { path: '/index', component: Index, meta: { title: "首页" } },
+  // { path: '/', redirect: "/index" },
+  {
+    path: '/index',
+    components: {
+      default: Index,
+      a: IndexFooter,
+      b: IndexFooter
+    },
+    meta: { title: "首页" }
+  },
   { path: '/slot', component: Slot, meta: { title: "插槽" } },
   { path: '/setup', component: SetUp, meta: { title: "组合API" } },
   { path: '/directive', component: Directive, meta: { title: "指令" } },

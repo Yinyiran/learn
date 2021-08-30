@@ -8,10 +8,10 @@
     >
   </div>
   <div class="router-view">
-    <router-view v-slot="{ Component }">
-      <component :is="Component" />
-    </router-view>
+    <router-view class="view one"></router-view>
   </div>
+  <router-view class="view two" name="a"></router-view>
+  <router-view class="view three" name="b"></router-view>
 </template>
 <script lang="ts">
 import {
