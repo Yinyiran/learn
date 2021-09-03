@@ -5,28 +5,38 @@ public class HelloChris {
    * @param args any
    */
   public static void main(String[] args) {
+    // basicType();
+    customer();
+  }
+
+  private static void basicType() {
     System.out.println("Hello World");// hello world
     System.out.print("print");
+    int age;
+    age = 30;
+    System.out.println(age);
+    byte b = 127;
+    double dot = 123.22 + b;
+    float dot1 = 123;
+    double f = dot + dot1;
+    System.out.println(f);
+    String str = "a";
+    String str1 = str + dot1;
+    System.out.println(str1);
+    System.out.println('a' + 1);
   }
-}
 
-class Person {
-  static void lll() {
-
-  }
-}
-
-class Customer {
-  public static void main(String[] args) {
-    Customer customer = new Customer();
+  public static void customer() {
+    HelloChris helloChris = new HelloChris();
     {
       String name = "A-Chrisgader";
-      customer.name = name;
-      System.out.print("The customer's name:" + customer.name);
+      helloChris.name = name;
+      System.out.println("The helloChris's name:" + helloChris.name);
     }
     String name = "JSon Pierpo";
-    customer.name = name;
-    System.out.print(customer.name);
+    helloChris.name = name;
+    System.out.println(helloChris.name);
   }
+
   private String name;
 }
