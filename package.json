@@ -10,6 +10,7 @@
     "postpublish": "pinst --enable",
     "cypress": "cypress open"
   },
+  "license": "ISC",
   "husky": {
     "hookes": {
       "pre-commit": "lint-staged",

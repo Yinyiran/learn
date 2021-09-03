@@ -7,8 +7,9 @@ import AntDesign from "../components/AntDesign.vue"
 import DefineProperty from "../components/defineProperty.vue"
 import RouterView from "../components/routerview.vue"
 import IndexFooter from "../components/IndexFooter.vue"
+import VirtualRoll from "../components/VirtualRoll.vue"
 const routes = [
-  // { path: '/', redirect: "/index" },
+  { path: '/', redirect: "/index" },
   {
     path: '/index',
     components: {
@@ -30,6 +31,11 @@ const routes = [
     children: [
       { path: '/router-view', component: AntDesign }
     ]
+  },
+  {
+    path: '/virtualRulling',
+    component: VirtualRoll,
+    meta: { title: "虚拟滚动" },
   },
 ]
 

@@ -95,10 +95,10 @@ body {
   padding: 20px;
   span {
     display: inline-block;
-    padding: 6px 10px;
+    padding: 6px 8px;
     text-decoration: underline;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
     &.active {
       color: dodgerblue;
     }
