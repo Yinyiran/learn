@@ -1,11 +1,23 @@
+import pack.PackOne;
+
+class zz extends PackOne {
+
+}
+
+class yy extends pack2.PackOne {
+
+}
+
 public class HelloChris {
+  private String name;
+
   /**
    * main
    * 
    * @param args any
    */
   public static void main(String[] args) {
-    // basicType();
+    basicType();
     customer();
   }
 
@@ -38,5 +50,4 @@ public class HelloChris {
     System.out.println(helloChris.name);
   }
 
-  private String name;
 }
