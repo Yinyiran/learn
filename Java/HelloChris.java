@@ -1,4 +1,5 @@
 import pack.PackOne;
+import java.util.Date;
 
 class zz extends PackOne {
 
@@ -18,6 +19,8 @@ public class HelloChris {
    */
   public static void main(String[] args) {
     basicType();
+    Date d = new Date();
+    System.out.println(d.getTime());
     customer();
   }
 
