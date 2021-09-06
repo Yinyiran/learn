@@ -1,3 +1,5 @@
+import java.util.Date;
+
 public class HelloChris {
   /**
    * main
@@ -5,6 +7,8 @@ public class HelloChris {
    * @param args any
    */
   public static void main(String[] args) {
+    Date d = new Date();
+    System.out.println(d.getTime());
     // basicType();
     customer();
   }
