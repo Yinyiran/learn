@@ -7,5 +7,21 @@
   },
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
-  "livePreview.defaultPreviewPath": "/vite-vue/index.html"
+  "livePreview.defaultPreviewPath": "/vite-vue/index.html",
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "database": "data",
+      "dialect": "MySQL",
+      "name": "chris",
+      "password": "kongwu123",
+      "username": "root",
+      "driver": "MySQL"
+    }
+  ]
 }

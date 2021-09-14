@@ -1,13 +1,13 @@
 import pack.PackOne;
 import java.util.Date;
 
-class zz extends PackOne {
+// class zz extends PackOne {
 
-}
+// }
 
-class yy extends pack2.PackOne {
+// class yy extends pack2.PackOne {
 
-}
+// }
 
 public class HelloChris {
   private String name;
