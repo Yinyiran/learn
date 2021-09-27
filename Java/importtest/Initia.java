@@ -3,8 +3,6 @@ package importtest;
 import java.util.Date;
 import java.util.Vector;
 
-import javax.swing.DebugGraphics;
-
 class Point {
   public int x, y;
 
@@ -63,8 +61,9 @@ public class Initia {
     it.changeObjValue(it);
     System.out.println("Current itValue is:" + it.itValue);
 
-    ArrayT.initArr();
     StringObj.handleStr();
+    ArrayT.initArr();
+    ArrayT.test3(4);
   }
 }
 
@@ -85,7 +84,7 @@ class Course {
 
 class ArrayT {
   static int perimater;
-  String strArr[] = { "anmalew", "fawef", "afwef" };
+  static String strArr[] = { "anmalew", "fawef", "afwef", "afwef1", "afwef2", "afwef3", "afwef4" };
   static int int1[] = { 2, 3, 4, 5, 6, 7, 8 };
   static int int2[] = { 113, 234, 34, 534, 523, 645, 622, 3456 };
 
@@ -104,10 +103,41 @@ class ArrayT {
   }
 
   static void initArr() {
-    int[] myArr;
-    myArr  = new int[5];
     System.arraycopy(int1, 0, int2, 1, 4);
     System.out.println(int2);
+    char charArr[] = { 'a', 'b', 'c', 'd', 'e', 'f' };
+    String sc = new String(charArr, 2, 4);
+    System.out.println(sc);
+    System.out.println("Java".indexOf('a'));
+    System.out.println("JavaHelloWord!".substring(1, 3));
+    String s1 = "XYZ";
+    String s2 = "XYZ";
+    String s3 = new String("XYZ");
+    System.out.println("s1==s2:" + (s1 == s2) + "\ns1==s3:" + (s1 == s3));
+  }
+
+  static void test3(int n) {
+    int k, i, j, a[][] = new int[n][n];
+    k = 1;
+    for (i = 0; i < n; i++) {
+      if (i % 2 == 0) {
+        for (j = 0; j < i; j++)
+          a[i][j] = k++;
+        for (j = i - 1; j >= 0; j--)
+          a[j][i] = k++;
+      } else {
+        for (j = 0; j < i; j++)
+          a[j][i] = k++;
+        for (j = i - 1; j >= 0; j--)
+          a[i][j] = k++;
+      }
+    }
+    for (i = 0; i < n; i++) {
+      for (j = 0; j < n; j++) {
+        // System.out.println();
+      }
+    }
+    System.out.println(a);
   }
 
   // 向量
