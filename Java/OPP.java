@@ -1,4 +1,3 @@
-import java.lang.constant.DirectMethodHandleDesc.Kind;
 
 public class OPP {
   public static void main(String[] args) {
@@ -33,6 +32,12 @@ class Person {
 
   String shout() {
     String name = "awefawefw";
+    System.out.println("oh,my good ! i am " + age + " year old");
+    return name;
+  }
+
+  String shout(int a) {
+    String name = "1111";
     System.out.println("oh,my good ! i am " + age + " year old");
     return name;
   }

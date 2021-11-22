@@ -39,6 +39,7 @@ public class Array {
     System.out.println(tel);
   }
 
+  // 输入学生人数，分数，求平均和最高分，分数等级
   public static void getStuAvScore() {
     Scanner scan = new Scanner(System.in);
     System.out.println("请输入学生人数");
@@ -80,32 +81,6 @@ public class Array {
     System.out.println(mArr3[2].length);
   }
 
-  // 二分法查找；
-  public static void binarySearch() {
-    int[] arr = new int[] { -54, -2, 0, 2, 33, 43, 256, 999 };
-    boolean isFlag = true;
-    int number = 256;
-    int head = 0; // 首索引位置
-    int end = arr.length - 1; // 尾索引位置
-    while (head <= end) {
-      int middle = (head + end) / 2;
-      if (arr[middle] == number) {
-        System.out.println("找到指定的元素，索引为：" + middle);
-        isFlag = false;
-        break;
-      } else if (arr[middle] > number) {
-        end = middle - 1;
-      } else { // arr[middle] < number
-        head = middle + 1;
-      }
-    }
-    if (isFlag) {
-      System.out.println("未找到指定的元素");
-    }
-  }
-
-  // 冒泡排序
-  
   public static void arrMethods() {
     int arr[] = new int[] { 1, 2, 43, 54, 56, 6, 7, 7 };
     int arr2[] = new int[] { 1, 2, 43, 54, 56, 6, 65, 6, 7, 9 };
@@ -114,14 +89,6 @@ public class Array {
     System.out.println(Arrays.toString(arr2));
     System.out.println(Arrays.binarySearch(arr2, 56)); // 二分法查找给定值，
     System.out.println(Arrays.equals(arr, arr2));
-    // class namew {
-    // int a = 0;
-    // String name = "lalla";
-
-    // public static void main(String[] args) {
-
-    // }
-    // }
   }
 
   // 杨辉三角
@@ -240,4 +207,79 @@ public class Array {
     return arr;
   }
 
+  // 二分法查找；
+  public static void binarySearch() {
+    int[] arr = new int[] { -54, -2, 0, 2, 33, 43, 256, 999 };
+    boolean isFlag = true;
+    int number = 256;
+    int head = 0; // 首索引位置
+    int end = arr.length - 1; // 尾索引位置
+    while (head <= end) {
+      int middle = (head + end) / 2;
+      if (arr[middle] == number) {
+        System.out.println("找到指定的元素，索引为：" + middle);
+        isFlag = false;
+        break;
+      } else if (arr[middle] > number) {
+        end = middle - 1;
+      } else { // arr[middle] < number
+        head = middle + 1;
+      }
+    }
+    if (isFlag) {
+      System.out.println("未找到指定的元素");
+    }
+  }
+
+  // 冒泡排序
+  public static void bubbleSort() {
+    int[] arr = new int[] { 43, 54, 32, 44, 67, 89, -42, -62 };
+    for (int i = 0; i < arr.length; i++) {
+      for (int j = 0; j < arr.length - i - 1; j++) {
+        if (arr[j] > arr[j + 1]) {
+          int temp = arr[j];
+          arr[j] = arr[j + 1];
+          arr[j + 1] = temp;
+        }
+      }
+    }
+  }
+
+  // 快速排序
+
+  public static void quickSort() {
+    int[] data = { 9, -16, 30, 23, -30, -49, 25, 21, 30 };
+    System.out.println("排序之前：\n" + java.util.Arrays.toString(data));
+    subSort(data, 0, data.length - 1);
+    System.out.println("排序之后：\n" + java.util.Arrays.toString(data));
+  }
+
+  private static void swap(int[] data, int i, int j) {
+    int temp = data[i];
+    data[i] = data[j];
+    data[j] = temp;
+  }
+
+  private static void subSort(int[] data, int start, int end) {
+    if (start < end) {
+      int base = data[start];
+      int low = start;
+      int high = end + 1;
+      while (true) {
+        while (low < end && data[++low] - base <= 0)
+          ;
+        while (high > start && data[--high] - base >= 0)
+          ;
+        if (low < high) {
+          swap(data, low, high);
+        } else {
+          break;
+        }
+      }
+      swap(data, start, high);
+
+      subSort(data, start, high - 1);// 递归调用
+      subSort(data, high + 1, end);
+    }
+  }
 }
