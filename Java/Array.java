@@ -15,7 +15,8 @@ public class Array {
     // arrMethods();
     // arrayEver();
     // getUniqueNum();
-    circleRound();
+    // circleRound();
+    quickSort();
   }
 
   public static void arrDefaultValue() {
@@ -246,9 +247,9 @@ public class Array {
   }
 
   // 快速排序
-
   public static void quickSort() {
-    int[] data = { 9, -16, 30, 23, -30, -49, 25, 21, 30 };
+    int[] data = { 9, -16, 30, 23, -30, -49, 25, 21, 30, 1, 5, 10, -66 };
+
     System.out.println("排序之前：\n" + java.util.Arrays.toString(data));
     subSort(data, 0, data.length - 1);
     System.out.println("排序之后：\n" + java.util.Arrays.toString(data));

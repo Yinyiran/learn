@@ -2,6 +2,10 @@
 import java.util.*;
 
 public class Methods {
+  public static void main(String[] args) {
+    fibonacci();
+  }
+
   private int day, month, year;
 
   Methods() {
@@ -46,17 +50,18 @@ public class Methods {
     System.out.println("a:" + ds.a + ", b:" + ds.b);
   }
 
-  static void fibonacci(int count) {
-    int[] arr = new int[count];
-    fibRecursion(arr);
+  static void fibonacci() {
+    int value = fibRecursion(10);
+    System.out.println(value);
   }
 
-  static void fibRecursion(int[] arr) {
-    if (arr[arr.length - 1] != 0) {
-      fibRecursion(arr);
-    } else {
-      System.out.println(arr.toString());
+  static int fibRecursion(int n) {
+    if (n == 1 || n == 2) {
+      return 1;
+    } else { 
+      return fibRecursion(n - 1) + fibRecursion(n - 2);
     }
   }
 
 }
+ 
