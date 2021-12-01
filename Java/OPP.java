@@ -120,7 +120,6 @@ public class OPP {
     // String str1 = (String)o;
   }
 
-
 }
 
 class DataSwap {
@@ -315,7 +314,18 @@ class CheckAccount extends Account {
 
   @Override
   public void withdraw(double amount) {
-    // super.withdraw(amount);
+    if (getBalance() >= amount) {
+      // 方法一
+      // setBalance(getBalance() - amount);
+      // 方法er
+      super.withdraw(amount);
+    } else if (overdraft >= amount - getBalance()) {
+      overdraft -= amount - getBalance();
+      // setBalance(0);
+      super.withdraw(getBalance());
+    } else {
+      System.out.println("超过可透支限额");
+    }
   }
 
 }

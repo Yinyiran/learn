@@ -1,11 +1,13 @@
-public class extend {
+public class Extend {
   public static void main(String[] args) {
 
   }
 
-  static void areaTest() {
-    Geometric test = new Geometric();
-  }
+  // static void areaTest() {
+  //   Geometric geome = new Geometric();
+  //   Circle c1 = new Circle();
+  //   geome.
+  // }
 }
 
 // 子类继承父类
