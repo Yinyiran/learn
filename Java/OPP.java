@@ -2,7 +2,9 @@ public class OPP {
   public static void main(String[] args) {
     // newPerson();
     // getArea();
-    accountBook();
+    // accountBook();
+    // kidsTest();
+    personTest();
   }
 
   static void newPerson() {
@@ -38,34 +40,87 @@ public class OPP {
     System.out.println(account.getAnnualInterestRate());
   }
 
-}
-
-class Person {
-  int age;
-  private int age2;
-
-  String shout() {
-    String name = "awefawefw";
-    System.out.println("oh,my good ! i am " + age + " year old");
-    return name;
+  static void kidsTest(String[] args) {
+    Kids somekid = new Kids(12);
+    System.out.println();
+    somekid.printAge();
+    somekid.setYearsOld(20);
+    somekid.setSex(1);
+    somekid.employeed();
+    somekid.manOrWoman();
   }
 
-  String shout(int a) {
-    String name = "1111";
-    System.out.println("oh,my good ! i am " + age + " year old");
-    return name;
+  static void personTest() {
+    System.out.println("1. Person p1:");
+    Person p1 = new Person();
+    p1.eat();
+
+    System.out.println("2. Man:");
+    Man man = new Man();
+    man.eat();
+    man.age = 30;
+    man.earnMoney();
+
+    System.out.println("3. Person-Man p2:");
+    // 有了对象的多态性以后，内存中实际上是加载了子类特有的属性和方法，但是由于变量声明为父类类型，导致
+    // 编译时，只能调用父类中声明的属性和方法。子类的属性和方法不能调用。
+    Person p2 = new Man();
+    p2.eat();
+    p2.walk();
+    p2.name = "Tom";
+
+    System.out.println("4. (Man)p2:");
+    Man m1 = (Man) p2; // 使用强制类型转换符，也可称为:向下转型
+    m1.earnMoney();
+
+    // a instanceof A 判断对象a是否是类A的实例；
+    if (p2 instanceof Woman) {
+      Woman w1 = (Woman) p2;
+      // Woman w1 = (Woman) p2; // 使用强转时，可能出现ClassCastException异常
+      // w1.goShopping();
+      w1.goShopping();
+      System.out.println("p2 instanceof Woman");
+    }
+
+    if (p2 instanceof Man) {
+      Man m2 = (Man) p2;
+      m2.earnMoney();
+      System.out.println("p2 instanceof Man");
+    }
+    if (p2 instanceof Person) {
+      System.out.println("p2 instanceof Person");
+    }
+    if (p2 instanceof Object) {
+      System.out.println("p2 instanceof Object");
+    }
+
+    // 向下转型的常见问题
+    // 练习
+    // 问题1:编译时通过，运行时不通过
+    // 举例一
+    // Person p3 = new Woman();
+    // Man m3 = (Man)p3;
+
+    // 举例二
+    Person p4 = new Person();
+    Man m4 = (Man) p4;
+    System.out.println(m4.age);
+
+    // 问题二:编译通过，运行时也通过
+    Object obj = new Woman();
+    Person p = (Person) obj;
+    System.out.println(p.age);
+
+    // 问题三:编译不通过
+    // Man m5 = new woman();
+
+    // String str = new Date();
+
+    // Object o = new Date();
+    // String str1 = (String)o;
   }
 
-  Person() {
-    System.out.println("new Person ");
-  }
 
-  Person(int age1) {
-    // age = age1;
-    System.out.println("new Person age");
-    System.out.println(age);
-    System.out.println(age2);
-  }
 }
 
 class DataSwap {
@@ -130,19 +185,6 @@ class Kids extends ManKind {
   }
 }
 
-class KidsTest {
-  public static void main(String[] args) {
-    Kids somekid = new Kids(12);
-    System.out.println();
-    somekid.printAge();
-    somekid.setYearsOld(20);
-    somekid.setSex(1);
-
-    somekid.employeed();
-    somekid.manOrWoman();
-  }
-}
-
 class Circle {
   public double radius;
 
@@ -202,6 +244,7 @@ class Cylinder extends Circle {
  * 该类包括的属性：账号id，余额balance，年利率annualInterestRate； 包含的方法：访问器方法（getter和setter方法），
  * 返回月利率的方法getMonthlyInterest()， 取款方法withdraw()，存款方法deposit()。
  */
+
 class Account {
   private int id;
   private double balance;
@@ -273,5 +316,75 @@ class CheckAccount extends Account {
   @Override
   public void withdraw(double amount) {
     // super.withdraw(amount);
+  }
+
+}
+
+class Person {
+  String name;
+  int age;
+  private int age2;
+
+  Person() {
+    // System.out.println("new Person ");
+  }
+
+  Person(int age1) {
+    // age = age1;
+    System.out.println("new Person age");
+    System.out.println(age);
+    System.out.println(age2);
+  }
+
+  String shout() {
+    String name = "awefawefw";
+    System.out.println("oh,my good ! i am " + age + " year old");
+    return name;
+  }
+
+  String shout(int a) {
+    String name = "1111";
+    System.out.println("oh,my good ! i am " + age + " year old");
+    return name;
+  }
+
+  public void eat() {
+    System.out.println("人，吃饭");
+  }
+
+  public void walk() {
+    System.out.println("人，走路");
+  }
+}
+
+class Man extends Person {
+  boolean isSmoking;
+
+  public void eat() {
+    System.out.println("男人，吃饭，长肉");
+  }
+
+  public void walk() {
+    System.out.println("男人，霸气走路");
+  }
+
+  public void earnMoney() {
+    System.out.println("赚钱养家");
+  }
+}
+
+class Woman extends Person {
+  boolean isDress;
+
+  public void goShopping() {
+    System.out.println("女人喜欢购物");
+  }
+
+  public void eat() {
+    System.out.println("女人，吃的少，身材苗条");
+  }
+
+  public void walk() {
+    System.out.println("女人，走路好看");
   }
 }
