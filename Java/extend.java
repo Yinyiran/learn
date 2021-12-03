@@ -66,14 +66,14 @@ public class Extend {
 
 class Geometric {
   protected String color;
-  protected double with;
+  protected double width;
 
   public Geometric() {
   }
 
-  public Geometric(String color, double with) {
+  public Geometric(String color, double width) {
     this.color = color;
-    this.with = with;
+    this.width = width;
   }
 
   public String getColor() {
@@ -85,11 +85,11 @@ class Geometric {
   }
 
   public double getWeight() {
-    return with;
+    return width;
   }
 
-  public void setWeight(double with) {
-    this.with = with;
+  public void setWeight(double width) {
+    this.width = width;
   }
 
   public double calArea() {
@@ -100,8 +100,8 @@ class Geometric {
 class Round extends Geometric {
   private double radius;
 
-  public Round(String color, double radius, double with) {
-    super(color, with);
+  public Round(String color, double radius, double width) {
+    super(color, width);
     this.radius = radius;
   }
 
@@ -122,8 +122,8 @@ class Round extends Geometric {
 class Rectangle extends Geometric {
   private double height;
 
-  public Rectangle(String color, double height, double with) {
-    super(color, with);
+  public Rectangle(String color, double height, double width) {
+    super(color, width);
     this.height = height;
   }
 
@@ -137,7 +137,7 @@ class Rectangle extends Geometric {
 
   @Override
   public double calArea() {
-    return super.with * height;
+    return super.width * height;
   }
 }
 
@@ -145,8 +145,8 @@ class Triangle extends Geometric {
 
   private double height;
 
-  public Triangle(String color, double height, double with) {
-    super(color, with);
+  public Triangle(String color, double height, double width) {
+    super(color, width);
     this.height = height;
   }
 
@@ -160,7 +160,7 @@ class Triangle extends Geometric {
 
   @Override
   public double calArea() {
-    return height * super.with / 2;
+    return height * super.width / 2;
   }
 }
 

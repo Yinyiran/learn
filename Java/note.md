@@ -37,3 +37,31 @@
      str1.equals(str2) // true   String、Date、File、包装类,比较两个对象的“实体内容”是否相同
      str1 == str2 // false  两个引用的地址是否相同
    ```
+
+三、 final :最终的
+
+1.  final 可以用来修饰的结构:类、方法、变量
+2.  final 用来修饰一个类:此类不能被其他类所继承。
+    比如:String 类、System 类、StringBuffer 类
+3.  final 修饰一个方法:final 标记的方法不能被子类重写。
+    比如：Object 类中的 getClass()。
+4.  final 用来修饰变量:此时的"变量"(成员变量或局部变量)就是一个常量。名称大写，且只能被赋值一次。
+
+    1. final 修饰属性，可以考虑赋值的位置有:显式初始化、代码块中初始化、构造器中初始化
+    2. final 修饰局部变量:
+       尤其是使用 final 修饰形参时，表明此形参是一个常量。当我们调用此方法时，给常量形参赋一个实参。
+       一旦赋值以后，就只能在方法体内使用此形参，但不能进行重新赋值。
+
+5.  static final 用来修饰:全局常量
+
+```java
+   // 常量类 不能被继承
+   final class FinalClass {
+      final WIDTH = 0; // 常量 不能被修改
+      final HEIGHT;
+      // 常量方法不能被重写
+      final getWIDTH(){
+         return WIDTH;
+      }
+   }
+```
