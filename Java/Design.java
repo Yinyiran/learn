@@ -2,6 +2,7 @@ public class Design {
   public static void main(String[] args) {
     // staticBlock();
     // templateTest();
+    starConcert();
   }
 
   public static void staticBlock() {
@@ -14,6 +15,15 @@ public class Design {
   public static void templateTest() {
     SubTemplate t = new SubTemplate();
     t.sendTime();
+  }
+
+  public static void starConcert(){
+    Proxy star = new Proxy(new RealStar());
+    star.confer();
+    star.signContract();
+    star.bookTicket();
+    star.sing();
+    star.collectMoney();
   }
 }
 
@@ -135,5 +145,122 @@ class ManageMoney extends BankTemplateMethod {
   @Override
   public void transact() {
     System.out.println("我要理财");
+  }
+}
+
+/**
+ * 代理模式
+ * 为其他对象提供一种代理以控制对这个对象的访问。
+ * 1.安全代理：屏蔽对真实角色的直接访问。
+ * 2.远程代理：通过代理类处理远程方法调用（RMI）
+ * 3.延迟加载：先加载轻量级的代理对象，真正需要再加载真实对象
+ */
+
+interface NetWork {
+  void browse();
+}
+
+// 被代理类
+class Server implements NetWork {
+  @Override
+  public void browse() {
+    System.out.println("真实的服务器来访问");
+  }
+}
+
+// 代理类
+class ProxyServer implements NetWork {
+  private NetWork work;
+
+  public ProxyServer(NetWork work) {
+    this.work = work;
+  }
+
+  public void check() {
+    System.out.println("联网前的检查工作");
+  }
+
+  @Override
+  public void browse() {
+    check();
+    work.browse();
+  }
+}
+
+// 比如你要开发一个大文档查看软件，大文档中有大的图片，有可能一个图片有 100MB，在打开文件时，不可能
+// 将所有的图片都显示出来，这样就可以使用代理模式，当需要查看图片时，用 proxy 来进行大图片的打开。
+
+// 例子
+interface Star {
+  void confer();// 面谈
+
+  void signContract();// 签合同
+
+  void bookTicket();// 订票
+
+  void sing();// 唱歌
+
+  void collectMoney();// 收钱
+}
+
+// 被代理类
+class RealStar implements Star {
+  @Override
+  public void confer() {
+
+  }
+
+  @Override
+  public void signContract() {
+
+  }
+
+  @Override
+  public void bookTicket() {
+
+  }
+
+  @Override
+  public void sing() {
+    System.out.println("明星唱歌");
+  }
+
+  @Override
+  public void collectMoney() {
+
+  }
+}
+
+// 代理类
+class Proxy implements Star {
+  private Star real;
+
+  public Proxy(Star real) {
+    this.real = real;
+  }
+
+  @Override
+  public void confer() {
+    System.out.println("经纪人面谈");
+  }
+
+  @Override
+  public void signContract() {
+    System.out.println("经纪人签合同");
+  }
+
+  @Override
+  public void bookTicket() {
+    System.out.println("经纪人订票");
+  }
+
+  @Override
+  public void sing() {
+    real.sing();
+  }
+
+  @Override
+  public void collectMoney() {
+    System.out.println("经纪人收钱");
   }
 }
