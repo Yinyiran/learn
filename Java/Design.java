@@ -1,6 +1,7 @@
 public class Design {
   public static void main(String[] args) {
-    staticBlock();
+    // staticBlock();
+    // templateTest();
   }
 
   public static void staticBlock() {
@@ -8,6 +9,11 @@ public class Design {
     Block o = new Block();
     System.out.println(Block.orderId);
     System.out.println(o);
+  }
+
+  public static void templateTest() {
+    SubTemplate t = new SubTemplate();
+    t.sendTime();
   }
 }
 
@@ -62,5 +68,72 @@ class Block {
 
   {
     orderId = 2;
+  }
+}
+
+// 抽象类体现的就是一种模板模式的设计，抽象类作为多个子类的通用模板，子类在抽象类的基础上进行扩展、改造，
+// 但子类总体上会保留抽象类的行为方式。
+
+// 模板方法的设计模式
+abstract class Template {
+  public void sendTime() {
+    long start = System.currentTimeMillis();
+    code();
+    long end = System.currentTimeMillis();
+    System.out.println(start);
+    System.out.println(end);
+  }
+
+  public abstract void code();
+}
+
+class SubTemplate extends Template {
+  @Override
+  public void code() {
+    for (int i = 2; i < 1000; i++) {
+      boolean isFlag = true;
+      for (int j = 2; j < Math.sqrt(i); j++) {
+        if (i % j == 0) {
+          isFlag = false;
+          break;
+        }
+        if (isFlag) {
+          System.out.println(i);
+        }
+      }
+    }
+  }
+}
+
+abstract class BankTemplateMethod {
+  public void takeNumber() {
+    System.out.println("取号，排队");
+  }
+
+  public abstract void transact(); // 办理基本业务 钩子方法
+
+  public void evaluate() {
+    System.out.println("反馈评分");
+  }
+
+  // 模板方法，把基本操作组合到一起，子类一般不能重写
+  public final void process() {
+    this.takeNumber();
+    this.transact(); // 像个钩子，具体执行时，挂哪个子类，就执行哪个子类的实现代码
+    this.evaluate();
+  }
+}
+
+class DrawMoney extends BankTemplateMethod {
+  @Override
+  public void transact() {
+    System.out.println("我要取款");
+  }
+}
+
+class ManageMoney extends BankTemplateMethod {
+  @Override
+  public void transact() {
+    System.out.println("我要理财");
   }
 }
