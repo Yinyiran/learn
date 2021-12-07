@@ -17,7 +17,7 @@ public class Design {
     t.sendTime();
   }
 
-  public static void starConcert(){
+  public static void starConcert() {
     Proxy star = new Proxy(new RealStar());
     star.confer();
     star.signContract();
@@ -264,3 +264,6 @@ class Proxy implements Star {
     System.out.println("经纪人收钱");
   }
 }
+
+// 工厂模式
+

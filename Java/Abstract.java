@@ -1,5 +1,6 @@
 import java.util.Calendar;
 
+
 // 抽象类是用来模型化那些父类无法确定全部实现，而是由其子类提供具体实现的对象的类。
 // 1.abstract 不能用来修饰变量、代码块、构造器；
 // 2.abstract 不能用来修饰私有方法、静态方法、final 的方法、final 的类。

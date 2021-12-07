@@ -58,10 +58,14 @@ public class Methods {
   static int fibRecursion(int n) {
     if (n == 1 || n == 2) {
       return 1;
-    } else { 
+    } else {
       return fibRecursion(n - 1) + fibRecursion(n - 2);
     }
   }
 
 }
- 
+
+class DataSwap {
+  public int a;
+  public int b;
+}

@@ -11,7 +11,8 @@
 
 public class Interface {
   public static void main(String[] args) {
-    USBTest();
+    // USBTest();
+    compareTest();
   }
 
   public static void USBTest() {
@@ -46,6 +47,21 @@ public class Interface {
         System.out.println("mp3 结束工作");
       }
     });
+  }
+
+  public static void compareTest() {
+    CompareCircle c1 = new CompareCircle(3.4);
+    CompareCircle c2 = new CompareCircle(3.6);
+    int compareVal = c1.compareTo(c2);
+    if (compareVal > 0) {
+      System.out.println("c1对象大");
+    } else if (compareVal < 0) {
+      System.out.println("c2对象大");
+    } else {
+      System.out.println("c1 与 c2 一样大");
+    }
+    int compareValue1 = c1.compareTo(new String("AA"));
+    System.out.println(compareValue1);
   }
 }
 
@@ -164,5 +180,103 @@ class Printer implements USB {
   @Override
   public void stop() {
     System.out.println("打印机结束工作");
+  }
+}
+
+// 错误1
+interface A {
+  int x = 0;
+}
+
+class B {
+  int x = 1;
+}
+
+class C extends B implements A {
+  public void pX() {
+    // 编译不通过，x 不明确
+    // System.out.println(x);
+
+    // System.out.println(super.x); //1
+    // System.out.println(A.x);//0
+  }
+
+  public static void main(String[] args) {
+    new C().pX();
+  }
+}
+
+// 错误2
+interface PlayAble {
+  void play();
+}
+
+interface BounceAble {
+  void play();
+}
+
+interface RollAble extends PlayAble, BounceAble {
+  Ball ball = new Ball("PingPang"); // 此处省略了 public static final
+}
+
+class Ball implements RollAble {
+  private String name;
+
+  public String getName() {
+    return name;
+  }
+
+  public Ball(String name) {
+    this.name = name;
+  }
+
+  public void play() {
+    // ball = new Ball("footbal"); // 报错
+    System.out.println(ball.getName());
+  }
+}
+
+// 练习 ： 比较两个对象
+interface CompareObj {
+  int compareTo(Object o);
+}
+
+class CircleA {
+  Double radius;
+
+  public Double getRadius() {
+    return radius;
+  }
+
+  public void setRadius(Double radius) {
+    this.radius = radius;
+  }
+
+  public CircleA() {
+    super();
+  }
+
+  public CircleA(Double radius) {
+    this.radius = radius;
+  }
+}
+
+class CompareCircle extends CircleA implements CompareObj {
+  public CompareCircle(double radius) {
+    super(radius);
+  }
+
+  @Override
+  public int compareTo(Object o) {
+    if (this == o) {
+      return 0;
+    }
+    if (o instanceof CompareCircle) {
+      CompareCircle c = (CompareCircle) o;
+      // 当属性 radius 声明为 Double 类型时，可以调用包装类的方法
+      return this.getRadius().compareTo(c.getRadius());
+    } else {
+      return 0;
+    }
   }
 }

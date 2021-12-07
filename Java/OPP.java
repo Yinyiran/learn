@@ -1,3 +1,4 @@
+
 public class OPP {
   public static void main(String[] args) {
     // newPerson();
@@ -8,12 +9,12 @@ public class OPP {
   }
 
   static void newPerson() {
-    Person anna = new Person(5);
-    // Person tony = new Person();
+    People anna = new People(5);
+    // People tony = new People();
     // anna.age = 10;
     anna.shout();
     // tony.shout();
-    Person tony = anna;
+    People tony = anna;
     anna = null;
     System.out.println(anna);
     System.out.println(tony.age);
@@ -51,8 +52,8 @@ public class OPP {
   }
 
   static void personTest() {
-    System.out.println("1. Person p1:");
-    Person p1 = new Person();
+    System.out.println("1. People p1:");
+    People p1 = new People();
     p1.eat();
 
     System.out.println("2. Man:");
@@ -61,10 +62,10 @@ public class OPP {
     man.age = 30;
     man.earnMoney();
 
-    System.out.println("3. Person-Man p2:");
+    System.out.println("3. People-Man p2:");
     // 有了对象的多态性以后，内存中实际上是加载了子类特有的属性和方法，但是由于变量声明为父类类型，导致
     // 编译时，只能调用父类中声明的属性和方法。子类的属性和方法不能调用。
-    Person p2 = new Man();
+    People p2 = new Man();
     p2.eat();
     p2.walk();
     p2.name = "Tom";
@@ -87,8 +88,8 @@ public class OPP {
       m2.earnMoney();
       System.out.println("p2 instanceof Man");
     }
-    if (p2 instanceof Person) {
-      System.out.println("p2 instanceof Person");
+    if (p2 instanceof People) {
+      System.out.println("p2 instanceof People");
     }
     if (p2 instanceof Object) {
       System.out.println("p2 instanceof Object");
@@ -98,17 +99,17 @@ public class OPP {
     // 练习
     // 问题1:编译时通过，运行时不通过
     // 举例一
-    // Person p3 = new Woman();
+    // People p3 = new Woman();
     // Man m3 = (Man)p3;
 
     // 举例二
-    Person p4 = new Person();
+    People p4 = new People();
     Man m4 = (Man) p4;
     System.out.println(m4.age);
 
     // 问题二:编译通过，运行时也通过
     Object obj = new Woman();
-    Person p = (Person) obj;
+    People p = (People) obj;
     System.out.println(p.age);
 
     // 问题三:编译不通过
@@ -122,10 +123,6 @@ public class OPP {
 
 }
 
-class DataSwap {
-  public int a;
-  public int b;
-}
 
 class ManKind {
   int sex;
@@ -330,18 +327,18 @@ class CheckAccount extends Account {
 
 }
 
-class Person {
+class People {
   String name;
   int age;
   private int age2;
 
-  Person() {
-    // System.out.println("new Person ");
+  People() {
+    // System.out.println("new People ");
   }
 
-  Person(int age1) {
+  People(int age1) {
     // age = age1;
-    System.out.println("new Person age");
+    System.out.println("new People age");
     System.out.println(age);
     System.out.println(age2);
   }
@@ -367,7 +364,7 @@ class Person {
   }
 }
 
-class Man extends Person {
+class Man extends People {
   boolean isSmoking;
 
   public void eat() {
@@ -383,7 +380,7 @@ class Man extends Person {
   }
 }
 
-class Woman extends Person {
+class Woman extends People {
   boolean isDress;
 
   public void goShopping() {
