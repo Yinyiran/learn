@@ -3,7 +3,7 @@ public class Java8 {
     testCompare();
   }
 
-  public static void testCompare() {
+  static void testCompare() {
     SubCompare sub = new SubCompare();
     // 知识点1： 接口中定义的静态方法，只能通过接口来调用
     CompareX.m1();
@@ -31,6 +31,14 @@ interface CompareX {
   }
 }
 
+interface CompareY {
+  default void m3() {
+    System.out.println("compare :shanghai");
+  }
+
+  void m4();
+}
+
 class SubCompare extends SuperCompare implements CompareX, CompareY {
   @Override
   public void m2() {
@@ -48,17 +56,16 @@ class SubCompare extends SuperCompare implements CompareX, CompareY {
     CompareX.super.m3(); // 接口默认方法
     CompareY.super.m3(); // 接口默认方法
   }
+
+  @Override
+  public void m4() {
+    System.out.println("CompareY interface method");
+  }
 }
 
 class SuperCompare {
   public void m3() {
     System.out.println("SuperCompare: beijing");
-  }
-}
-
-interface CompareY {
-  default void m3() {
-    System.out.println("compare :shanghai");
   }
 }
 
@@ -81,7 +88,7 @@ class Father {
   }
 }
 
-class Man extends Father implements Filial, Spoony {
+class ManA extends Father implements Filial, Spoony {
   @Override
   public void help() {
     System.out.println("该救谁");

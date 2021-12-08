@@ -5,7 +5,8 @@ public class OPP {
     // getArea();
     // accountBook();
     // kidsTest();
-    personTest();
+    // personTest();
+    innerTest();
   }
 
   static void newPerson() {
@@ -121,8 +122,45 @@ public class OPP {
     // String str1 = (String)o;
   }
 
-}
+  static void innerTest() {
+    // 创建Cat实例（静态的成员内部类）
+    Inner.Cat cat = new Inner.Cat();
+    cat.show();
+    // 创建deer实例（非静态成员内部类）
+    // Inner.Deer deer = new Inner.Deer(); // 错误
+    Inner in = new Inner();
+    Inner.Deer deer = in.new Deer();
+    deer.sing();
+    deer.display("TONY");
 
+    /*
+     * .匿名内部类不能定义任何静态成员、方法和类，只能创建匿名内部类的一个实例。
+     * 一个匿名内部类一定是在new的后面，用其隐含实现一个接口或实现一个类。
+     * 匿名内部类的特点
+     * 匿名内部类必须继承父类或实现接口
+     * 匿名内部类只能有一个对象
+     * 匿名内部类对象只能使用多态形式引用
+     */
+    in.test(new PartInner() {
+      String mame;
+
+      public void print() {
+        System.out.println(mame);
+      }
+
+      @Override
+      public double getPrice() {
+        print();
+        return 66.6;
+      }
+
+      @Override
+      public String getName() {
+        return "CUP 888";
+      }
+    });
+  }
+}
 
 class ManKind {
   int sex;
@@ -394,4 +432,79 @@ class Woman extends People {
   public void walk() {
     System.out.println("女人，走路好看");
   }
+}
+
+/**
+ * 内部类
+ * 1. 将类A生命在类B中，则A是内部类，B是外部类
+ * 2. 内部类分类：成员内部类，局部内部类（方法内，代码块内，构造器内）
+ * 3. 成员内部类：
+ */
+
+class Inner {
+  String name = "Tony Choppy";
+  int age;
+
+  public void eat() {
+    System.out.println("Tony eat chocolate");
+  }
+
+  // 静态成员内部类
+  static class Cat {
+    String name;
+    int age;
+
+    public void show() {
+      System.out.println("Tony is a cat");
+    }
+
+    // eat();
+  }
+
+  // 非静态成员内部类
+  class Deer {
+    String name = "choppa special deer";
+
+    public Deer() {
+    }
+
+    public void sing() {
+      System.out.println("choppa is elk");
+      Inner.this.eat();// 调用外部类的非静态属性
+      eat();
+    }
+
+    public void display(String name) {
+      System.out.println(name);
+      System.out.println(this.name);
+      System.out.println(Inner.this.name);
+    }
+  }
+
+  /**
+   * 在局部内部类的方法中(比如:show)如果调用局部内部类所声明的方法(比如：method)中的局部变量(比如：num)的话,
+   * 要求此局部变量声明为final的。
+   */
+  public void partClass() {
+    int num = 10;
+    // 局部内部类
+    class AA {
+      public int show() {
+        // num = 20;
+        System.out.println(num);
+        return num;
+      }
+    }
+    System.out.println(new AA().show());
+  }
+
+  public void test(PartInner part) {
+    System.out.println("购买了一个" + part.getName() + "，花掉了" + part.getPrice());
+  }
+}
+
+interface PartInner {
+  public double getPrice();
+
+  public String getName();
 }
