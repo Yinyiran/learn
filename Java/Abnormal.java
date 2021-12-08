@@ -40,7 +40,8 @@ public class Abnormal {
 
   public static void throwError() {
     try {
-      ExceptionClass.method2();
+      ExceptionClass exc = new ExceptionClass();
+      exc.method2();
     } catch (IOException e) {
       System.out.println("throwError");
       e.printStackTrace();
@@ -76,6 +77,7 @@ class ExceptionClass {
     fis.close();
     System.out.println("haha");
   }
+
   // 手动扔出错误
   public void handleThrowError() {
     throw new RuntimeException("您输入的数据非法");
