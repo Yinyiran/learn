@@ -19,7 +19,7 @@ public class ThreadJ {
 class LeftThread extends Thread {
   public void run() {
     for (int i = 0; i < 5; i++) {
-      System.out.println("I am LeftThread : " + i);
+      System.out.print("LeftThread : " + i + "; ");
       System.out.println(Thread.currentThread().getName());
       ;
       try {
@@ -33,7 +33,7 @@ class LeftThread extends Thread {
 class RightThread extends Thread {
   public void run() {
     for (int i = 0; i < 5; i++) {
-      System.out.println("I am RightThread : " + i);
+      System.out.print("RightThread : " + i + "; ");
       System.out.println(Thread.currentThread().getName());
       ;
       try {

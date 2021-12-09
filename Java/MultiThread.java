@@ -2,10 +2,77 @@
  * 基本概念：程序、进程、线程
  * 进程(process)：程序的一次执行过程，或是正在运行的一个程序。
  * 线程(thread)，进程可进一步细化为线程，是一个程序内部的一条执行路径。
- * 
+ * 创建线程的场景：
+ * ① 同时执行多个任务
+ * ② 执行等待任务（用户输入、文件读写、网络操作、搜索等）
+ * ③ 执行后台循行的程序
  */
+
+/**
+ * 测试Thread类的常用方法
+ * 1.start():启动当前线程，执行当前线程的run()
+ * 2.run():通常需要重写Thread类中的此方法，将创建的线程要执行的操作声明在此方法中
+ * 3.currentThread(): 静态方法，返回当前代码执行的线程
+ * 4.getName():获取当前线程的名字
+ * 5.setName():设置当前线程的名字
+ * 6.yield():释放当前CPU的执行权
+ * 7.join():在线程a中调用线程b的join(),此时线程a就进入阻塞状态，直到线程b完全执行完以后，线程a才结束阻塞状态
+ * 8.stop():已过时。当执行此方法时，强制结束当前线程。
+ * 9.sleep(long-millitime):让当前线程“睡眠”指定时间的millitime毫秒)。在指定的millitime毫秒时间内，当前线程是阻塞状态的
+ * 10.isAlive()：返回boolean，判断线程是否还活着
+ * 11.getPriority()：获取线程优先等级
+ * 11.setPriority()：设置线程优先等级 MAX_PRIORITY：10 MIN _PRIORITY：1 NORM_PRIORITY：5（默认）
+ */
+
 public class MultiThread {
   public static void main(String[] args) {
+    runMyThread();
+  }
 
+  public static void runMyThread() {
+    MyThreadA ta = new MyThreadA();
+    // 通过对象调用start() ① 启用当前线程，② 调用当前线程run();
+    // 不能直接调用run 会报错
+    ta.setName("Thread-A");
+    ta.setPriority(Thread.MAX_PRIORITY);
+    ta.start();
+
+    MyThreadB tb = new MyThreadB();
+    tb.setName("Thread-B");
+    tb.getPriority();
+    tb.start();
+  }
+}
+
+// 1. 创建一个继承于Thread类的子类
+class MyThreadA extends Thread {
+  // 重写run方法
+  @Override
+  public void run() {
+    for (int i = 0; i < 100; i++) {
+      if (i % 2 == 0) {
+        try {
+          sleep(20);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+        String threadName = Thread.currentThread().getName();
+        System.out.println(threadName + i);
+      }
+    }
+  }
+}
+
+class MyThreadB extends Thread {
+  // 重写run方法
+  @Override
+  public void run() {
+    for (int i = 0; i < 100; i++) {
+      yield();
+      if (i % 2 == 1) {
+        String threadName = Thread.currentThread().getName();
+        System.out.println(threadName + i);
+      }
+    }
   }
 }
