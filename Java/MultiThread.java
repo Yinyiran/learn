@@ -1,3 +1,5 @@
+import java.lang.Runnable;
+
 /**
  * 基本概念：程序、进程、线程
  * 进程(process)：程序的一次执行过程，或是正在运行的一个程序。
@@ -26,7 +28,9 @@
 
 public class MultiThread {
   public static void main(String[] args) {
-    runMyThread();
+    // runMyThread();
+    // ticketTest();
+    ticketTest2();
   }
 
   public static void runMyThread() {
@@ -42,6 +46,35 @@ public class MultiThread {
     tb.getPriority();
     tb.start();
   }
+
+  // 三个窗口同时卖票
+  public static void ticketTest() {
+    Wicket w1 = new Wicket();
+
+    Thread t1 = new Thread(w1);
+    Thread t2 = new Thread(w1);
+    Thread t3 = new Thread(w1);
+    t1.setName("窗口1");
+    t2.setName("窗口2");
+    t3.setName("窗口3");
+    t1.start();
+    t2.start();
+    t3.start();
+  }
+
+  // 三个窗口同时卖票
+  public static void ticketTest2() {
+    Wicket2 w1 = new Wicket2();
+    Wicket2 w2 = new Wicket2();
+    Wicket2 w3 = new Wicket2();
+    w1.setName("窗口1");
+    w2.setName("窗口2");
+    w3.setName("窗口3");
+    w1.start();
+    w2.start();
+    w3.start();
+  }
+
 }
 
 // 1. 创建一个继承于Thread类的子类
@@ -68,11 +101,61 @@ class MyThreadB extends Thread {
   @Override
   public void run() {
     for (int i = 0; i < 100; i++) {
-      yield();
       if (i % 2 == 1) {
         String threadName = Thread.currentThread().getName();
         System.out.println(threadName + i);
       }
     }
+  }
+}
+
+class Wicket implements Runnable {
+  private static int ticket = 100;
+
+  @Override
+  public void run() {
+    while (true) {
+      if (ticket > 1) {
+        show();
+      } else {
+        break;
+      }
+    }
+  }
+
+  public synchronized void show() {
+    try {
+      Thread.sleep(100);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    System.out.println(Thread.currentThread().getName() + ": 卖票，票号为：" + ticket);
+    ticket--;
+  }
+}
+ 
+// 方法2
+class Wicket2 extends Thread {
+  private static int ticket = 100;
+
+  @Override
+  public void run() {
+    while (true) {
+      if (ticket > 1) {
+        show();
+      } else {
+        break;
+      }
+    }
+  }
+
+  public static synchronized void show() {
+    try {
+      Thread.sleep(100);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    System.out.println(Thread.currentThread().getName() + ": 卖票，票号为：" + ticket);
+    ticket--;
   }
 }
