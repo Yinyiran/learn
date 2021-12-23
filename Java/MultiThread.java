@@ -109,9 +109,11 @@ class MyThreadB extends Thread {
   }
 }
 
+// 实现Runnable接口
 class Wicket implements Runnable {
   private static int ticket = 100;
 
+  // 实现类去实现Runnable中的抽象方法:run()
   @Override
   public void run() {
     while (true) {
