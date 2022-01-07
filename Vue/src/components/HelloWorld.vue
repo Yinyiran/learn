@@ -1,5 +1,16 @@
 <template>
   <div class="hello">
+    <a-button type="primary" icon="search">ant-design-vue button</a-button>
+    <a-breadcrumb>
+      <a-breadcrumb-item href="">
+        <a-icon type="home" />
+      </a-breadcrumb-item>
+      <a-breadcrumb-item href="">
+        <a-icon type="user" />
+        <span>Application List</span>
+      </a-breadcrumb-item>
+      <a-breadcrumb-item> Application </a-breadcrumb-item>
+    </a-breadcrumb>
     <h1>{{ msg }}</h1>
     <h1>{{ model }}</h1>
     <m-form :model="model" :rules="rules" ref="formRef">
@@ -26,6 +37,11 @@ import FormItem from "./form/FormItem.vue";
 import MInput from "./form/MInput.vue";
 import { createEl } from "../service/util.js";
 import Message from "./notice/Message.vue";
+import Vue from "vue";
+import { Breadcrumb } from "ant-design-vue";
+import { Icon } from "ant-design-vue";
+Vue.use(Breadcrumb);
+Vue.use(Icon);
 
 export default {
   components: { FormItem, MInput, MForm },

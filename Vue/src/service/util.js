@@ -4,7 +4,7 @@ export const createEl = (component, props) => {
   const vm = new Vue({
     render(h) {
       return h(component, { props });
-    }
+    },
   }).$mount();
   const comp = vm.$children[0];
   document.body.appendChild(comp.$el);
@@ -19,24 +19,22 @@ export const createEl = (component, props) => {
   return comp;
 };
 
-
 export const uuidv4 = () => {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    let r = Math.random() * 16 | 0
-    let v = c == 'x' ? r : (r & 0x3 | 0x8);
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+    let r = (Math.random() * 16) | 0;
+    let v = c == "x" ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
-}
-
+};
 
 export const delay2 = (() => {
   let timer = null;
-  return function (fn) {
+  return (fn) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
       fn();
     }, 500);
-  }
+  };
 })();
 
 export const throttle = (() => {
@@ -48,5 +46,5 @@ export const throttle = (() => {
       clearTimeout(timer);
       timer = null;
     }, 500);
-  }
+  };
 })();
