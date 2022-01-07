@@ -9,12 +9,12 @@ import { defineComponent } from "vue";
 export default defineComponent({
   props: {
     modelValue: String,
-    modelModifiers: {
-      default: () => ({}),
+    modelModifiers: { 
+      default: () => ({ capture: "" }),
     },
     desc: String,
     descModifiers: {
-      default: () => ({}),
+      default: () => ({ capture: "" }),
     },
   },
   emits: ["update:modelValue", "update:desc"],

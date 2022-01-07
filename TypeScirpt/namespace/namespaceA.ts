@@ -26,8 +26,8 @@ validators2["ZIP code"] = new Validation2.ZipCodeValidator();
 validators2["Letters only"] = new Validation2.LettersOnlyValidator();
 
 for (const s of stringArr) {
-  for (let name in validators) {
-    let isMatch = validators[name].isAcceptable(s)
+  for (let name in validators2) {
+    let isMatch = validators2[name].isAcceptable(s)
     console.log(`'${s}' ${isMatch ? "matches" : "does not match"} '${name}`)
   }
 }

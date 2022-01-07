@@ -1,41 +1,76 @@
 <template>
   <div class="tab">
-    <span v-for="tab in tabs" @click="toRoute(tab.route)">{{ tab.title }}</span>
+    <span
+      v-for="tab in tabs"
+      :class="{ active: curTab === tab.route }"
+      @click="toRoute(tab.route)"
+      >{{ tab.title }}</span
+    >
   </div>
   <div class="router-view">
-    <router-view v-slot="{ Component }">
-      <keep-alive>
-        <component :is="Component" />
-      </keep-alive>
-    </router-view>
+    <router-view class="view one"></router-view>
   </div>
+  <router-view class="view two" name="a"></router-view>
+  <router-view class="view three" name="b"></router-view>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import {
+  defineComponent,
+  ref,
+  reactive,
+  watch,
+  markRaw,
+  toRaw,
+  provide,
+} from "vue";
 import Routes from "./router";
 export default defineComponent({
-  provide: {
-    appData: "provide app.vue",
-    hahah: ["ssss"],
-  },
-  methods: {
-    toRoute(index: string) {
-      this.$router.push(index);
-    },
-  },
-  computed: {
-    tabs() {
-      let tabArr: Array<{ route: string; title: any }> = [];
-      Routes.options.routes.forEach((r) => {
-        if (r.meta) {
-          tabArr.push({
-            route: r.path,
-            title: r.meta.title,
-          });
-        }
-      });
-      return tabArr;
-    },
+  setup() {
+    let curTab = ref("/index");
+    let tabs: Array<{ route: string; title: any }> = reactive([]);
+    Routes.options.routes.forEach((r) => {
+      if (r.meta) {
+        tabs.push({
+          route: r.path,
+          title: r.meta.title,
+        });
+      }
+    });
+    provide("appData", "provide from app.vue");
+    const testObj = { a: 1, b: 2, c: 0 };
+    Object.defineProperty(testObj, "c", {
+      set(val) {
+        console.log(`设置c,${val}`);
+      },
+    });
+    testObj.c = 20;
+    window.testobj = testObj;
+
+    const p = {
+      name: "阿巴",
+      age: 20,
+    };
+    const person = reactive(p);
+    p.sex = 0;
+    console.log(toRaw(person));
+    console.log(toRaw(person) === p);
+
+    watch(
+      person,
+      (newval, oldval) => {
+        console.log(newval, oldval);
+      },
+      { immediate: true }
+    );
+    return {
+      curTab,
+      tabs,
+      person,
+      toRoute(route: string) {
+        Routes.push(route);
+        curTab.value = route;
+      },
+    };
   },
 });
 </script>
@@ -60,11 +95,13 @@ body {
   padding: 20px;
   span {
     display: inline-block;
-    padding: 6px 20px;
-    color: dodgerblue;
+    padding: 6px 8px;
     text-decoration: underline;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 16px;
+    &.active {
+      color: dodgerblue;
+    }
   }
 }
 .router-view {

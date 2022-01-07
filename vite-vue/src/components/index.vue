@@ -12,15 +12,22 @@
     v-model.capture="modifer"
     v-model:desc.capture="descModifer"
   ></model-modifier>
+  <teleport to="#app">
+    <h1>ljjemllljcmogpfapbkkighbhhppjdbglj</h1>
+  </teleport>
+  <Child />
+  <button @click="changePerson('alal')">改变数据1</button>
+  <button @click="changePerson('aa')">改变数据2</button>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, onActivated, onUpdated } from "vue";
 import HelloWorld from "./HelloWorld.vue";
 import ModelModifier from "./ModelModifier.vue";
+import Child from "./child.vue";
 export default defineComponent({
   name: "App",
-  components: { HelloWorld, ModelModifier },
+  components: { Child, HelloWorld, ModelModifier },
   data() {
     return {
       space: "Hello Vue 3 + TypeScript + Vite",
@@ -50,8 +57,12 @@ export default defineComponent({
     onUpdated(() => {
       console.log(itemRefs);
     });
+    const person = { name: "" };
     return {
       setItemRef,
+      changePerson(n: string) {
+        person.name = n;
+      },
     };
   },
   methods: {

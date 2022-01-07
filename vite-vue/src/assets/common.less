@@ -1,29 +1,36 @@
-.drag-around {
-  padding-right: 6px;
-  position: relative;
-  z-index: 10000;
+.drag-x {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding-right: 5px;
+  box-sizing: border-box;
   .drag-block {
     position: absolute;
-    right: 0;
+    right: -5px;
     top: 0;
     bottom: 0;
-    width: 6px;
+    width: 5px;
     height: 100%;
     z-index: 10001;
     cursor: w-resize;
     background-color: #e8e8e8;
   }
 }
-.drag-updown {
-  padding-bottom: 6px;
-  position: relative;
+.drag-y {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-top: 5px;
+  box-sizing: border-box;
   .drag-block {
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: 0px;
     right: 0;
     width: 100%;
-    height: 6px;
+    height: 5px;
     cursor: s-resize;
     background-color: #e8e8e8;
   }

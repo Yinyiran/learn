@@ -26,7 +26,9 @@ export default {
   components: { HelloWorld },
   methods: {
     broadFn() {
-      broadcase.call(this, "form-item", "acceptBroad", "Home  broadFn()");
+      // broadcase.call(this, "form-item", "acceptBroad", "Home  broadFn()");
+      console.log(this);
+      this.$router.push("about");
     },
   },
   created() {
