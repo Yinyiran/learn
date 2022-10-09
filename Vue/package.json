@@ -17,10 +17,7 @@
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-router": "~4.3.0",
     "@vue/cli-service": "~4.3.0",
-<<<<<<< HEAD
     "@vue/eslint-config-prettier": "^6.0.0",
-=======
->>>>>>> c6c36de0c4fb920e6aed74ff7066dbc376698090
     "babel-plugin-import": "^1.13.3",
     "vue-template-compiler": "^2.6.11"
   },

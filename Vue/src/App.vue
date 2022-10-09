@@ -8,6 +8,19 @@
   </div>
 </template>
 
+<script>
+import Vue from "../vue.js";
+export default {
+  mounted() {
+    let inst = new Vue({
+      data: { a: 1 },
+    });
+    inst.$data.a = 234;
+    console.log(inst);
+  },
+};
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

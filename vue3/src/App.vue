@@ -1,11 +1,6 @@
 <template>
   <div class="tab">
-    <span
-      v-for="tab in tabs"
-      :class="{ active: curTab === tab.route }"
-      @click="toRoute(tab.route)"
-      >{{ tab.title }}</span
-    >
+    <span v-for="tab in tabs" :class="{ active: curTab === tab.route }" @click="toRoute(tab.route)">{{ tab.title }}</span>
   </div>
   <div class="router-view">
     <router-view class="view one"></router-view>
@@ -14,15 +9,7 @@
   <router-view class="view three" name="b"></router-view>
 </template>
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  reactive,
-  watch,
-  markRaw,
-  toRaw,
-  provide,
-} from "vue";
+import { defineComponent, ref, reactive, watch,  toRaw, provide } from "vue";
 import Routes from "./router";
 export default defineComponent({
   setup() {
@@ -44,11 +31,12 @@ export default defineComponent({
       },
     });
     testObj.c = 20;
-    window.testobj = testObj;
+    // window.testobj = testObj;
 
     const p = {
       name: "阿巴",
       age: 20,
+      sex: 0,
     };
     const person = reactive(p);
     p.sex = 0;

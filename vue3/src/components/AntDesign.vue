@@ -9,9 +9,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
-import { TreeDataItem } from "ant-design-vue/es/tree/Tree";
 
-const treeData: TreeDataItem[] = [
+const treeData: any = [
   {
     title: "parent 1",
     key: "0-0",
