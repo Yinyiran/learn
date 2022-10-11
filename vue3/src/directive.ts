@@ -12,18 +12,20 @@ export default {
           el.nextSibling.style.cssText = `position:absolute;top:0;right:0;left:${width}px;bottom:0`;
           dragDom.addEventListener("mousedown", (e: any) => {
             document.onmousemove = (event: any) => {
-              let lang = event.clientX - el.parentNode.offsetLeft;
+              let lang = event.clientX - el.getBoundingClientRect().left;;
               const parentWidth = el.parentNode.offsetWidth;
               let width = "";
-              if (minWidth >= lang) {
+              if (lang <= minWidth) {
                 width = `${minWidth}px`;
-              } else if (parentWidth <= lang && maxWidth >= parentWidth) {
+              } else if (lang >= parentWidth && maxWidth >= parentWidth) {
                 width = `${parentWidth}px`;
-              } else if (maxWidth <= lang) {
+              } else if (lang >= maxWidth) {
                 width = `${maxWidth}px`;
               } else {
                 width = `${lang}px`;
               }
+              console.log(width);
+
               el.style.width = width;
               el.nextSibling.style.left = width;
             };
@@ -39,15 +41,17 @@ export default {
 
           dragDom.addEventListener("mousedown", (e: any) => {
             document.onmousemove = (event: any) => {
-              let lang = event.clientY - el.parentNode.offsetTop;
+              console.log(el.getBoundingClientRect());
+              
+              let lang = event.clientY - el.getBoundingClientRect().top;
               // 范围约束：不能大约最大值或者父级的宽度，不能小于最小值
               const parentHeight = el.parentNode.offsetHeight;
               let height = "";
-              if (minHeight >= lang) {
+              if (lang <= minHeight) {
                 height = `${minHeight}px`;
-              } else if (parentHeight <= lang && maxHeight >= parentHeight) {
+              } else if (lang >= parentHeight && maxHeight >= parentHeight) {
                 height = `${parentHeight}px`;
-              } else if (maxHeight <= lang) {
+              } else if (lang >= maxHeight) {
                 height = `${maxHeight}px`;
               } else {
                 height = `${lang}px`;

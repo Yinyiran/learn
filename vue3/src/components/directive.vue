@@ -19,7 +19,6 @@ export default defineComponent({});
 .vertical {
   height: 50%;
   display: flex;
-  padding-left: 200px;
 }
 .tip {
   width: 100px;

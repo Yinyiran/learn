@@ -11,13 +11,14 @@ export default defineComponent({
   methods: {
     mouseDown(args: any) {
       console.log(args);
-      const el = args.path[0];
 
       const block = document.createElement("div");
       block.classList.add("drag-block");
-      block.style.cssText = `left:${args.offsetX}px`;
+      block.style.cssText = `left:${args.getBoundingClientRect().left}px`;
       document.onmousemove = (event: any) => {
-        block.style.width = `${event.clientX-args.offsetX}px`;
+        block.style.width = `${
+          event.clientX - args.getBoundingClientRect().left - 10
+        }px`;
       };
       document.onmouseup = () => {
         document.onmousemove = null;
